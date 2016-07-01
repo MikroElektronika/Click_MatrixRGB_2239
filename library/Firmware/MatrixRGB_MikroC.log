@@ -1,0 +1,94 @@
+0	1	mikroCFT90x.exe -MSF -DBG -p FT900 -HEAP 60000 -BIN -DL -SSA -O11111114 -fo100 -N"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\MatrixRGB_MikroC.mcpf9" -SP"C:\C4W\Mikroelektronika\mikroC PRO for FT90x\defs\" -SP"C:\C4W\Mikroelektronika\mikroC PRO for FT90x\uses\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\font\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\src\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\include\" -IP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\include\" -IP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\" -IP"C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\font\" "fontlibrary.c" "matrixrgb_firmware.c" "matrixrgb_firmware_main.c" "__Lib_Delays.emcl" "__Lib_System.emcl" "__Lib_Math.emcl" "__Lib_MathDouble.emcl" "__Lib_GPIO.emcl" "__Lib_CString.emcl" "__Lib_MemManager.emcl" "__Lib_PWM.emcl" "__Lib_PWR.emcl"	 
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 1665	123	Compiled Successfully	fontlibrary.c
+hint: 80	1354	 warning: "/*" within comment     /**************************************** Application Side ( ARM ) *****************************************      from C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c: 21:    #include "matrixrgb_firmware.h"	c:\users\corey\documents\projects\matrixrgb\firmware\library\include\matrixrgb_firmware.h
+diagnostics: 0	122	Compilation Started	stdint.h
+hint: 174	1163	Variable 'cnt' has been declared, but not used	matrixrgb_firmware.c
+hint: 216	1163	Variable 'cnt' has been declared, but not used	matrixrgb_firmware.c
+hint: 1142	1163	Variable 'red' has been declared, but not used	matrixrgb_firmware.c
+hint: 1142	1163	Variable 'green' has been declared, but not used	matrixrgb_firmware.c
+hint: 1142	1163	Variable 'blue' has been declared, but not used	matrixrgb_firmware.c
+hint: 1179	1163	Variable 'red' has been declared, but not used	matrixrgb_firmware.c
+hint: 1179	1163	Variable 'green' has been declared, but not used	matrixrgb_firmware.c
+hint: 1179	1163	Variable 'blue' has been declared, but not used	matrixrgb_firmware.c
+hint: 1216	1163	Variable 'red' has been declared, but not used	matrixrgb_firmware.c
+hint: 1216	1163	Variable 'green' has been declared, but not used	matrixrgb_firmware.c
+hint: 1216	1163	Variable 'blue' has been declared, but not used	matrixrgb_firmware.c
+hint: 1302	1163	Variable 'red' has been declared, but not used	matrixrgb_firmware.c
+hint: 1302	1163	Variable 'green' has been declared, but not used	matrixrgb_firmware.c
+hint: 1302	1163	Variable 'blue' has been declared, but not used	matrixrgb_firmware.c
+hint: 0	1004	interrupt handler (TimerInterrupt at 0x0013)	matrixrgb_firmware.c
+diagnostics: 1500	123	Compiled Successfully	matrixrgb_firmware.c
+hint: 123	1164	Variable 'tmpCol' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 124	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 124	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 124	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 120	1164	Variable 'img' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 147	1164	Variable 'tmpCol' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 148	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 148	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 148	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 173	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 174	1164	Variable 'tmpCol' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 215	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 216	1164	Variable 'tmpCol' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 357	1164	Variable 'speed' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 367	1164	Variable 'speed' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 377	1164	Variable 'speed' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 387	1164	Variable 'speed' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 496	1164	Variable 'currRow' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 726	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 726	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 726	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 755	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 755	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 755	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 753	1164	Variable 'width' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 753	1164	Variable 'height' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 778	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 814	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 814	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 814	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 812	1164	Variable 'i' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 812	1164	Variable 'j' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 813	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 838	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 876	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 876	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 876	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 874	1164	Variable 'i' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 874	1164	Variable 'j' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 875	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 905	1164	Variable 'font_width' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 954	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 954	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 954	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 953	1164	Variable 'i' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 953	1164	Variable 'j' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 955	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 982	1164	Variable 'font_width' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1041	1164	Variable 'red' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1041	1164	Variable 'green' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1041	1164	Variable 'blue' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1039	1164	Variable 'i' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1039	1164	Variable 'j' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1042	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1062	1164	Variable 'text_width' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1062	1164	Variable 'text_height' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1138	1164	Variable 'temp_row' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1139	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1175	1164	Variable 'temp_row' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1176	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 1460	1164	Variable 'buffer' has been eliminated by optimizer	matrixrgb_firmware.c
+hint: 80	1354	 warning: "/*" within comment     /**************************************** Application Side ( ARM ) *****************************************      from C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware_main.c: 1:    #include "matrixrgb_firmware.h"	c:\users\corey\documents\projects\matrixrgb\firmware\library\include\matrixrgb_firmware.h
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 107	123	Compiled Successfully	matrixrgb_firmware_main.c
+diagnostics: 0	127	All files Compiled in 266 ms	 
+hint: 0	1144	Used RX: 26 (81%)   Free RX: 6 (19%)	Used RX: 26 (81%)   Free RX: 6 (19%)
+hint: 0	1144	Static RAM (bytes): 405   Dynamic RAM (bytes): 5121	Static RAM (bytes): 405   Dynamic RAM (bytes): 5121
+hint: 0	1144	HEAP RAM (bytes): 60000	HEAP RAM (bytes): 60000
+hint: 0	1144	Used ROM (bytes): 17582 (7%)  Free ROM (bytes): 244562 (93%)	Used ROM (bytes): 17582 (7%)  Free ROM (bytes): 244562 (93%)
+diagnostics: 0	125	Project Linked Successfully	MatrixRGB_MikroC.mcpf9
+diagnostics: 0	128	Linked in 94 ms	 
+diagnostics: 0	129	Project 'MatrixRGB_MikroC.mcpf9' completed: 407 ms	 
+diagnostics: 0	103	Finished successfully: 01 Jul 2016, 12:10:48	MatrixRGB_MikroC.mcpf9
