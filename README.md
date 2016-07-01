@@ -7,7 +7,7 @@
 
 [Manual Page](http://docs.mikroe.com/Matrixrgb)
 
-[Learn Page]()
+[Learn Page](http://learn.mikroe.com/matrix-rgb-panels/)
 
 ---
 
