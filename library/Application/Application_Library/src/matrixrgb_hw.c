@@ -85,10 +85,17 @@ void matrixrgb_init( uint8_t width, uint8_t height )
 
 }
 
-void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint8_t start_row, uint8_t start_col )
+void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint16_t start_row, uint16_t start_col )
 {
     uint8_t i = 0;
     uint8_t *ptr = text;
+        uint8_t col_lo, col_hi;
+        uint8_t row_lo, row_hi;
+
+    row_lo = start_row & 0xFF;
+    row_hi = ( start_row >> 8 ) & 0xFF;
+    col_lo = start_col & 0xFF;
+    col_hi = ( start_col >> 8 ) & 0xFF;
 
     spi_buffer[0] = WRITE_TEXT_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
@@ -98,9 +105,11 @@ void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint8_t
     spi_buffer[1] = color.green;
     spi_buffer[2] = color.blue;
     matrixrgb_hal_write( &spi_buffer, 3 );
-        spi_buffer[0] = start_row;
-        spi_buffer[1] = start_col;
-        matrixrgb_hal_write( &spi_buffer, 2 );
+    spi_buffer[0] = col_lo;
+    spi_buffer[1] = col_hi;
+        spi_buffer[2] = row_lo;
+        spi_buffer[3] = row_hi;
+    matrixrgb_hal_write( &spi_buffer, 4 );
 
     for( i = 0; i < text_size; i++ )
       {
@@ -109,16 +118,28 @@ void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint8_t
       }
 }
 
-void matrixrgb_image_load( uint8_t *bmp, uint8_t width, uint8_t height )
+void matrixrgb_image_load( uint8_t *bmp, uint16_t width, uint16_t height )
 {
     uint16_t i, j;
     uint8_t *ptr = bmp;
+    uint8_t w_lo, w_hi;
+    uint8_t h_lo, h_hi;
+
+    w_lo = width & 0xFF;
+    w_hi = ( width >> 8 ) & 0xFF;
+    h_lo = height & 0xFF;
+    h_hi = ( height >> 8 ) & 0xFF;
 
     spi_buffer[0] = IMAGE_LOAD_CMD;             // Send command for Image Load
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = width;
+    spi_buffer[0] = w_lo;                       // Send Low and High bytes for width and height
+    spi_buffer[1] = w_hi;
+    spi_buffer[2] = h_lo;
+    spi_buffer[3] = h_hi;
+    matrixrgb_hal_write( &spi_buffer, 4 );
+   /* spi_buffer[0] = width;                    // Width and height used to be 1 byte ( now they're 2 )
     spi_buffer[1] = height;
-    matrixrgb_hal_write( &spi_buffer, 2 );      // Send Width and then Height
+    matrixrgb_hal_write( &spi_buffer, 2 );      // Send Width and then Height */
 
     for( i = 0; i < height; i++ )
         for( j = 0; j < width; j++ )
@@ -129,16 +150,28 @@ void matrixrgb_image_load( uint8_t *bmp, uint8_t width, uint8_t height )
         }
 }
 
-void matrixrgb_scroll_img_left( uint8_t *bmp, uint8_t width, uint8_t height, uint8_t speed )
+void matrixrgb_scroll_img_left( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed )
 {
     uint16_t i, j;
     uint8_t *ptr = bmp;
+    uint8_t w_lo, w_hi;
+    uint8_t h_lo, h_hi;
+
+    w_lo = width & 0xFF;
+    w_hi = ( width >> 8 ) & 0xFF;
+    h_lo = height & 0xFF;
+    h_hi = ( height >> 8 ) & 0xFF;
 
     spi_buffer[0] = SCROLL_IMG_LEFT_CMD;        
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = width;
+    spi_buffer[0] = w_lo;                       // Send Low and High bytes for width and height
+    spi_buffer[1] = w_hi;
+    spi_buffer[2] = h_lo;
+    spi_buffer[3] = h_hi;
+    matrixrgb_hal_write( &spi_buffer, 4 );
+   /* spi_buffer[0] = width;
     spi_buffer[1] = height;
-    matrixrgb_hal_write( &spi_buffer, 2 );
+    matrixrgb_hal_write( &spi_buffer, 2 );      */
     spi_buffer[0] = speed;
     matrixrgb_hal_write( &spi_buffer, 1 );
 
@@ -151,16 +184,28 @@ void matrixrgb_scroll_img_left( uint8_t *bmp, uint8_t width, uint8_t height, uin
         }
 }
 
-void matrixrgb_scroll_img_right( uint8_t *bmp, uint8_t width, uint8_t height, uint8_t speed )
+void matrixrgb_scroll_img_right( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed )
 {
     uint16_t i, j;
     uint8_t *ptr = bmp;
+    uint8_t w_lo, w_hi;
+    uint8_t h_lo, h_hi;
 
-    spi_buffer[0] = SCROLL_IMG_RIGHT_CMD;         // Send command for image load
+    w_lo = width & 0xFF;
+    w_hi = ( width >> 8 ) & 0xFF;
+    h_lo = height & 0xFF;
+    h_hi = ( height >> 8 ) & 0xFF;
+
+    spi_buffer[0] = SCROLL_IMG_RIGHT_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = width;
+    spi_buffer[0] = w_lo;                       // Send Low and High bytes for width and height
+    spi_buffer[1] = w_hi;
+    spi_buffer[2] = h_lo;
+    spi_buffer[3] = h_hi;
+    matrixrgb_hal_write( &spi_buffer, 4 );
+   /* spi_buffer[0] = width;
     spi_buffer[1] = height;
-    matrixrgb_hal_write( &spi_buffer, 2 );
+    matrixrgb_hal_write( &spi_buffer, 2 );      */
     spi_buffer[0] = speed;
     matrixrgb_hal_write( &spi_buffer, 1 );
 
@@ -209,8 +254,8 @@ void matrixrgb_scroll_text_left( char *text, color_t color, uint8_t speed , uint
     spi_buffer[1] = color.green;
     spi_buffer[2] = color.blue;
     matrixrgb_hal_write( &spi_buffer, 3 );
-        spi_buffer[0] = speed;
-        matrixrgb_hal_write( &spi_buffer, 1 );
+    spi_buffer[0] = speed;
+    matrixrgb_hal_write( &spi_buffer, 1 );
 
     for( i = 0; i < text_size; i++ )
     {
@@ -220,39 +265,66 @@ void matrixrgb_scroll_text_left( char *text, color_t color, uint8_t speed , uint
 
 }
 
-void matrixrgb_write_pixel( int row, int column, char red, char green, char blue )
+void matrixrgb_write_pixel( uint16_t row, uint16_t column, char red, char green, char blue )
 {
+    uint8_t r_lo, r_hi;
+    uint8_t c_lo, c_hi;
+
     spi_buffer[0] = WRITE_PXL_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = row;
-    spi_buffer[1] = column;
-    spi_buffer[2] = red;
-    spi_buffer[3] = green;
-    spi_buffer[4] = blue;
-    matrixrgb_hal_write( &spi_buffer, 5 );
+    r_lo = row & 0xFF;
+    r_hi = ( row >> 8 ) & 0xFF;
+    c_lo = column & 0xFF;
+    c_hi = ( column >> 8 ) & 0xFF;
+    spi_buffer[0] = r_lo;
+    spi_buffer[1] = r_hi;
+    spi_buffer[2] = c_lo;
+    spi_buffer[3] = c_hi;
+    spi_buffer[4] = red;
+    spi_buffer[5] = green;
+    spi_buffer[6] = blue;
+    matrixrgb_hal_write( &spi_buffer, 7 );
 
 }
 
-void matrixrgb_write_pixel_img( int row, int column, char red, char green, char blue )
+void matrixrgb_write_pixel_img( uint8_t row, uint8_t column, char red, char green, char blue )
 {
+    uint8_t r_lo, r_hi;
+    uint8_t c_lo, c_hi;
+   
     spi_buffer[0] = WRITE_PXL_IMG_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = row;
-    spi_buffer[1] = column;
-    spi_buffer[2] = red;
-    spi_buffer[3] = green;
-    spi_buffer[4] = blue;
-    matrixrgb_hal_write( &spi_buffer, 5 );
+    r_lo = row & 0xFF;
+    r_hi = ( row >> 8 ) & 0xFF;
+    c_lo = column & 0xFF;
+    c_hi = ( column >> 8 ) & 0xFF;
+    spi_buffer[0] = r_lo;
+    spi_buffer[1] = r_hi;
+    spi_buffer[2] = c_lo;
+    spi_buffer[3] = c_hi;
+    spi_buffer[4] = red;
+    spi_buffer[5] = green;
+    spi_buffer[6] = blue;
+    matrixrgb_hal_write( &spi_buffer, 7 );
 
 }
 
-void matrixrgb_erase_pixel( int row, int column )
+void matrixrgb_erase_pixel( uint16_t row, uint16_t column )
 {
+    uint8_t r_lo, r_hi;
+    uint8_t c_lo, c_hi;
+
     spi_buffer[0] = ERASE_PXL_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
-    spi_buffer[0] = row;
-    spi_buffer[1] = column;
-    matrixrgb_hal_write( &spi_buffer, 2 );
+    r_lo = row & 0xFF;
+    r_hi = ( row >> 8 ) & 0xFF;
+    c_lo = column & 0xFF;
+    c_hi = ( column >> 8 ) & 0xFF;
+    spi_buffer[0] = r_lo;
+    spi_buffer[1] = r_hi;
+    spi_buffer[2] = c_lo;
+    spi_buffer[3] = c_hi;
+    matrixrgb_hal_write( &spi_buffer, 4 );
 
 }
 

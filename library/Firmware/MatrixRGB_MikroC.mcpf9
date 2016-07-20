@@ -6,13 +6,13 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=library\include\matrixrgb_firmware.h
+Value=library\src\matrixrgb_firmware.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
 Value=1
 [HEAP_SIZE]
-Value=2000
+Value=60000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
@@ -26,10 +26,12 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=3
+Count=5
 File0=library\src\matrixrgb_firmware.c
 File1=library\src\matrixrgb_firmware_main.c
 File2=library\include\matrixrgb_firmware.h
+File3=MatrixRGB_MikroC.c
+File4=library\font\fontlibrary.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -37,13 +39,15 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=6
-Path0=C:\C4W\Mikroelektronika\mikroC PRO for FT90x\defs\
-Path1=C:\C4W\Mikroelektronika\mikroC PRO for FT90x\uses\
+Count=8
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for FT90x\defs\
+Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for FT90x\uses\
 Path2=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\
-Path3=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\font\
-Path4=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\src\
-Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\include\
+Path3=C:\C4W\Mikroelektronika\mikroC PRO for FT90x\defs\
+Path4=C:\C4W\Mikroelektronika\mikroC PRO for FT90x\uses\
+Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\font\
+Path6=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\src\
+Path7=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\include\
 [HEADER_PATH]
 Count=3
 Path0=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware\library\include\

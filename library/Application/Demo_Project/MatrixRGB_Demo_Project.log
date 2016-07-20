@@ -1,0 +1,35 @@
+0	1	mikroCARM.exe -MSF -DBG -pSTM32F107VC -BIN -LHF -DL -SSA -O11111114 -fo72 -N"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Demo_Project\MatrixRGB_Demo_Project.mcpar" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Demo_Project\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\src\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\" -SP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\" -IP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\" -IP"C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\" "MatrixRGB_Demo_Project.c" "matrixrgb_hal.c" "matrixrgb_hw.c" "resources.c" "__Lib_Math.emcl" "__Lib_MathDouble.emcl" "__Lib_Delays.emcl" "__Lib_System_105_107.emcl" "__Lib_GPIO_32F10x_Defs.emcl" "__Lib_GPIO_32F10x.emcl" "__Lib_CType.emcl" "__Lib_CString.emcl" "__Lib_CStdlib.emcl" "__Lib_Conversions.emcl" "__Lib_Button.emcl" "__Lib_ADC_12_32F10x_16ch.emcl" "__Lib_SPI_123.emcl"	 
+diagnostics: 0	122	Compilation Started	stdint.h
+hint: 730	1354	argument may be out of range [random_direction]	MatrixRGB_Demo_Project.c
+hint: 0	1004	interrupt handler (Timer2_interrupt at 0x002C)	MatrixRGB_Demo_Project.c
+diagnostics: 1003	123	Compiled Successfully	MatrixRGB_Demo_Project.c
+hint: 299	1164	Variable 'waiting' has been eliminated by optimizer	MatrixRGB_Demo_Project.c
+hint: 367	1164	Variable 'i' has been eliminated by optimizer	MatrixRGB_Demo_Project.c
+hint: 681	1164	Variable 'position' has been eliminated by optimizer	MatrixRGB_Demo_Project.c
+hint: 723	1164	Variable 'random_direction' has been eliminated by optimizer	MatrixRGB_Demo_Project.c
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 138	123	Compiled Successfully	matrixrgb_hal.c
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 412	123	Compiled Successfully	matrixrgb_hw.c
+hint: 270	1164	Variable 'r_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 270	1164	Variable 'r_hi' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 271	1164	Variable 'c_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 271	1164	Variable 'c_hi' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 292	1164	Variable 'r_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 292	1164	Variable 'r_hi' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 293	1164	Variable 'c_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 293	1164	Variable 'c_hi' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 314	1164	Variable 'r_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 314	1164	Variable 'r_hi' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 315	1164	Variable 'c_lo' has been eliminated by optimizer	matrixrgb_hw.c
+hint: 315	1164	Variable 'c_hi' has been eliminated by optimizer	matrixrgb_hw.c
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 1439	123	Compiled Successfully	resources.c
+diagnostics: 0	127	All files Compiled in 594 ms	 
+hint: 0	1144	Used RX: 16 (100%)   Free RX: 0 (0%)	Used RX: 16 (100%)   Free RX: 0 (0%)
+hint: 0	1144	Static RAM (bytes): 2502   Dynamic RAM (bytes): 63029	Static RAM (bytes): 2502   Dynamic RAM (bytes): 63029
+hint: 0	1144	Used ROM (bytes): 15205 (6%)  Free ROM (bytes): 246939 (94%)	Used ROM (bytes): 15205 (6%)  Free ROM (bytes): 246939 (94%)
+diagnostics: 0	125	Project Linked Successfully	MatrixRGB_Demo_Project.mcpar
+diagnostics: 0	128	Linked in 203 ms	 
+diagnostics: 0	129	Project 'MatrixRGB_Demo_Project.mcpar' completed: 984 ms	 
+diagnostics: 0	103	Finished successfully: 19 Jul 2016, 09:23:01	MatrixRGB_Demo_Project.mcpar

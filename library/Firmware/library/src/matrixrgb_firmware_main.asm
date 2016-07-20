@@ -13,13 +13,13 @@ JMPC	R30, Z, #0, L_main0
 JMP	$+8
 	#9999998
 NOP	
-;matrixrgb_firmware_main.c,37 :: 		while(1)
+;matrixrgb_firmware_main.c,37 :: 		while (1)
 L_main2:
 ;matrixrgb_firmware_main.c,39 :: 		receive_data( &buffer, 1 );
 LDK.L	R1, #1
 LDK.L	R0, #_buffer+0
 CALL	_receive_data+0
-;matrixrgb_firmware_main.c,41 :: 		switch( buffer[0] )
+;matrixrgb_firmware_main.c,41 :: 		switch ( buffer[0] )
 JMP	L_main4
 ;matrixrgb_firmware_main.c,43 :: 		case SETUP_CMD:
 L_main6:

@@ -1,6 +1,21 @@
 #line 1 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdbool.h"
+
+
+
+ typedef char _Bool;
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
+
+
+
+typedef long ptrdiff_t;
+
+
+ typedef unsigned long size_t;
+
+typedef unsigned long wchar_t;
 #line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
 
 
 
@@ -49,18 +64,9 @@ typedef unsigned long int uintptr_t;
 
 typedef signed long long intmax_t;
 typedef unsigned long long uintmax_t;
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
-
-
-
-typedef long ptrdiff_t;
-
-
- typedef unsigned long size_t;
-
-typedef unsigned long wchar_t;
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
 #line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
 #line 11 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
 extern const uint8_t Dejavu18_Bitmaps[2912];
 extern uint8_t Dejavu18_Widths[91];
@@ -100,11 +106,11 @@ void scroll_image_right( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t s
 #line 305 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
 #line 319 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void write_pixel( int row, int column, char red, char green, char blue);
+void write_pixel( uint16_t row, uint16_t column, char red, char green, char blue);
 #line 336 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void write_pixel_img( int row, int column, char red, char green, char blue);
+void write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue);
 #line 347 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void erase_pixel( int row, int column );
+void erase_pixel( uint16_t row, uint16_t column );
 #line 360 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void load_text( char *text, uint8_t text_width, uint8_t text_height, color_t color );
 #line 373 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
@@ -178,13 +184,25 @@ void clear_screen_command( void );
 #line 698 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void allocate_image( uint8_t width, uint8_t height );
 
-
 void write_text_command( void );
 
-void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_col );
+void write_text( uint8_t *text, color_t color, uint16_t start_row, uint16_t start_col );
 
-void write_letter( uint8_t *bmp, uint8_t width, uint8_t current_row, uint8_t current_col );
-#line 53 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+void write_letter( uint8_t *bmp, uint8_t width, uint16_t current_row, uint16_t current_col );
+#line 50 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+typedef enum
+{
+ ROW_ONE = 0x0F,
+ ROW_TWO = 0x02,
+ ROW_THREE = 0x03,
+ ROW_FOUR = 0x04,
+ ROW_FIVE = 0x05,
+ ROW_SIX = 0x06,
+ ROW_SEVEN = 0x07,
+ ROW_EIGHT = 0x08
+
+} rows_t;
+#line 66 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
 unsigned char Led_Matrix_Data at GPIO_PORT_08_15;
 sbit Led_Matrix_A at GPIO_PIN32_bit;
 sbit Led_Matrix_B at GPIO_PIN33_bit;
@@ -196,15 +214,50 @@ sbit Led_Matrix_OE at GPIO_PIN52_bit;
 
 static volatile uint8_t *img;
 uint8_t *FB;
-uint8_t currRow = 0;
-uint8_t p_width, p_height;
+rows_t currRow = ROW_ONE;
 uint8_t pan_width, pan_height;
 uint32_t shift_reg;
 uint8_t firm_buffer[65] = { 0 };
-#line 83 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+uint16_t p_width;
+uint16_t p_height;
+#line 92 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+static uint16_t get_coord_index( uint16_t row, uint16_t col );
+#line 97 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+static uint16_t get_coord_index( uint16_t row, uint16_t col )
+{
+ uint16_t incrementer = 0;
+ uint16_t starter = 0;
+ uint16_t buffer = 0;
+ uint16_t new = 0;
+ uint16_t mult = 0;
+ uint16_t new_col = 0;
+
+
+ if ( row >= 32 )
+ {
+ new_col = row / 32;
+ new_col *= ( pan_width * 32 );
+ row = row % 32;
+ col += new_col;
+ }
+ incrementer = ( row / 8 );
+ if ( ( ( incrementer % 2 ) == 0 ) || incrementer == 0 )
+ incrementer = 32;
+ else
+ incrementer = 0;
+ starter = ( col / 32 ) * 32;
+ if ( row < 16 )
+ new = 0;
+ else
+ new = shift_reg * 8;
+ mult = ( row % 8 ) * shift_reg;
+ buffer = incrementer + mult + new + starter + col;
+
+ return buffer;
+}
+
 void setup_command( void )
 {
-
  receive_data( &firm_buffer, 2 );
  system_setup( firm_buffer[0], firm_buffer[1] );
 }
@@ -216,8 +269,10 @@ void write_text_command( void )
  uint8_t i = 0;
  uint8_t size = 0;
  color_t my_color;
- uint8_t start_col;
- uint8_t start_row;
+ uint8_t col_hi, col_lo;
+ uint8_t row_hi, row_lo;
+ uint16_t start_col;
+ uint16_t start_row;
 
  receive_data( &firm_buffer, 1 );
  size = firm_buffer[0];
@@ -225,12 +280,17 @@ void write_text_command( void )
  my_color.red = firm_buffer[0];
  my_color.green = firm_buffer[1];
  my_color.blue = firm_buffer[2];
- receive_data( &firm_buffer, 2 );
- start_row = firm_buffer[0];
- start_col = firm_buffer[1];
+ receive_data( &firm_buffer, 4 );
+ col_lo = firm_buffer[0];
+ col_hi = firm_buffer[1];
+ row_lo = firm_buffer[2];
+ row_hi = firm_buffer[3];
+ start_col = col_hi;
+ start_col = ( start_col << 8 ) | col_lo;
+ start_row = row_hi;
+ start_row = ( start_row << 8 ) | row_lo;
 
-
- for( i = 0; i < size; i++ )
+ for ( i = 0; i < size; i++ )
  {
  receive_data( &firm_buffer, 1 );
  *ptr++ = firm_buffer[0];
@@ -245,10 +305,10 @@ void my_img_load( uint8_t *img, uint8_t width, uint8_t height )
  uint16_t tmpCol, cnt;
  char red, green, blue;
 
- for( i = 0; i < height; i++ )
+ for ( i = 0; i < height; i++ )
  {
  cnt = 0;
- for( j = 0; j < width; j++ )
+ for ( j = 0; j < width; j++ )
  {
  tmpCol = firm_buffer[cnt] + (firm_buffer[cnt + 1] << 8);
  red = tmpCol >> 11;
@@ -264,17 +324,25 @@ void my_img_load( uint8_t *img, uint8_t width, uint8_t height )
 
 void image_load_command( void )
 {
- int i, j;
- int wid, hei;
+ uint16_t i, j;
+ uint8_t wid_lo, wid_hi;
+ uint8_t hei_lo, hei_hi;
+ uint16_t wid, hei;
  uint16_t tmpCol;
  char red, green, blue;
 
- receive_data( &firm_buffer, 2 );
- wid = firm_buffer[0];
- hei = firm_buffer[1];
+ receive_data( &firm_buffer, 4 );
+ wid_lo = firm_buffer[0];
+ wid_hi = firm_buffer[1];
+ hei_lo = firm_buffer[2];
+ hei_hi = firm_buffer[3];
+ wid = wid_hi;
+ wid = ( wid << 8 ) | wid_lo;
+ hei = hei_hi;
+ hei = ( hei << 8 ) | hei_lo;
 
- for( i = 0; i < hei; i++ )
- for( j = 0; j < wid; j++ )
+ for ( i = 0; i < hei; i++ )
+ for ( j = 0; j < wid; j++ )
  {
  receive_data( &firm_buffer, 2 );
 
@@ -285,28 +353,34 @@ void image_load_command( void )
 
  write_pixel_img( i, j, red, green, blue);
  }
-
 }
 
 void scroll_img_left_command( void )
 {
- uint8_t img_w, img_h;
+ uint16_t img_w, img_h;
  uint16_t i, j;
  char red, green, blue;
  uint16_t cnt, tmpCol;
  uint8_t buffer = 0;
  uint8_t speed = 0;
+ uint8_t wid_lo, wid_hi;
+ uint8_t hei_lo, hei_hi;
 
- receive_data( &firm_buffer, 2 );
- img_w = firm_buffer[0];
- img_h = firm_buffer[1];
+ receive_data( &firm_buffer, 4 );
+ wid_lo = firm_buffer[0];
+ wid_hi = firm_buffer[1];
+ hei_lo = firm_buffer[2];
+ hei_hi = firm_buffer[3];
  receive_data( &firm_buffer, 1 );
  speed = firm_buffer[0];
+ img_w = wid_hi;
+ img_w = ( img_w << 8 ) | wid_lo;
+ img_h = hei_hi;
+ img_h = ( img_h << 8 ) | hei_lo;
  allocate_image( img_w, img_h );
 
-
- for( i = 0; i < img_h; i++ )
- for( j = 0; j < img_w; j++ )
+ for ( i = 0; i < img_h; i++ )
+ for ( j = 0; j < img_w; j++ )
  {
  buffer = 0;
  receive_data( &firm_buffer, 2 );
@@ -315,11 +389,11 @@ void scroll_img_left_command( void )
  red = tmpCol >> 11;
  green = (tmpCol & 0x7FF) >> 5;
  blue = tmpCol & 0x1F;
- if( ( red & 0x18 ) > 0 )
+ if ( ( red & 0x18 ) > 0 )
  buffer |= 0x04;
- if( ( green & 0x38 ) > 0 )
+ if ( ( green & 0x38 ) > 0 )
  buffer |= 0x02;
- if( ( blue & 0x18 ) > 0 )
+ if ( ( blue & 0x18 ) > 0 )
  buffer |= 0x01;
  img[( i * img_w ) + j] = buffer;
  }
@@ -332,23 +406,32 @@ void scroll_img_left_command( void )
 
 void scroll_img_right_command( void )
 {
- uint8_t img_w, img_h;
+ uint16_t img_w, img_h;
  uint16_t i, j;
  char red, green, blue;
  uint16_t cnt, tmpCol;
  uint8_t buffer = 0;
  uint8_t speed = 0;
+ uint8_t wid_lo, wid_hi;
+ uint8_t hei_lo, hei_hi;
 
- receive_data( &firm_buffer, 2 );
- img_w = firm_buffer[0];
- img_h = firm_buffer[1];
+ receive_data( &firm_buffer, 4 );
+ wid_lo = firm_buffer[0];
+ wid_hi = firm_buffer[1];
+ hei_lo = firm_buffer[2];
+ hei_hi = firm_buffer[3];
  receive_data( &firm_buffer, 1 );
  speed = firm_buffer[0];
+
+ img_w = wid_hi;
+ img_w = ( img_w << 8 ) | wid_lo;
+ img_h = hei_hi;
+ img_h = ( img_h << 8 ) | hei_lo;
  allocate_image( img_w, img_h );
 
 
- for( i = 0; i < img_h; i++ )
- for( j = 0; j < img_w; j++ )
+ for ( i = 0; i < img_h; i++ )
+ for ( j = 0; j < img_w; j++ )
  {
  buffer = 0;
  receive_data( &firm_buffer, 2 );
@@ -357,11 +440,11 @@ void scroll_img_right_command( void )
  red = tmpCol >> 11;
  green = (tmpCol & 0x7FF) >> 5;
  blue = tmpCol & 0x1F;
- if( ( red & 0x18 ) > 0 )
+ if ( ( red & 0x18 ) > 0 )
  buffer |= 0x04;
- if( ( green & 0x38 ) > 0 )
+ if ( ( green & 0x38 ) > 0 )
  buffer |= 0x02;
- if( ( blue & 0x18 ) > 0 )
+ if ( ( blue & 0x18 ) > 0 )
  buffer |= 0x01;
  img[( i * img_w ) + j] = buffer;
  }
@@ -373,22 +456,44 @@ void scroll_img_right_command( void )
 
 void write_pxl_command( void )
 {
- receive_data( &firm_buffer, 5 );
- write_pixel( firm_buffer[0], firm_buffer[1], firm_buffer[2], firm_buffer[3], firm_buffer[4] );
+ uint16_t row;
+ uint16_t col;
+
+
+ receive_data( &firm_buffer, 7 );
+ row = firm_buffer[1];
+ row = ( row << 8 ) | firm_buffer[0];
+ col = firm_buffer[3];
+ col = ( col << 8 ) | firm_buffer[2];
+ write_pixel( row, col, firm_buffer[4], firm_buffer[5], firm_buffer[6] );
 }
 
 
 void write_pxl_img_command( void )
 {
- receive_data( &firm_buffer, 5 );
- write_pixel_img( firm_buffer[0], firm_buffer[1], firm_buffer[2], firm_buffer[3], firm_buffer[4] );
+ uint16_t row;
+ uint16_t col;
+
+ receive_data( &firm_buffer, 7 );
+ row = firm_buffer[1];
+ row = ( row << 8 ) | firm_buffer[0];
+ col = firm_buffer[3];
+ col = ( col << 8 ) | firm_buffer[2];
+ write_pixel_img( row, col, firm_buffer[4], firm_buffer[5], firm_buffer[6] );
 }
 
 
 void erase_pxl_command( void )
 {
- receive_data( &firm_buffer, 2 );
- erase_pixel( firm_buffer[0], firm_buffer[1] );
+ uint16_t row;
+ uint16_t col;
+
+ receive_data( &firm_buffer, 4 );
+ row = firm_buffer[1];
+ row = ( row << 8 ) | firm_buffer[0];
+ col = firm_buffer[3];
+ col = ( col << 8 ) | firm_buffer[2];
+ erase_pixel( row, col );
 }
 
 void scroll_text_left_command( void )
@@ -409,7 +514,7 @@ void scroll_text_left_command( void )
  receive_data( &firm_buffer, 1 );
  speed = firm_buffer[0];
 
- for( i = 0; i < size; i++ )
+ for ( i = 0; i < size; i++ )
  {
  receive_data( &firm_buffer, 1 );
  *ptr++ = firm_buffer[0];
@@ -439,7 +544,7 @@ void scroll_text_right_command( void )
  speed = firm_buffer[0];
 
 
- for( i = 0; i < size; i++ )
+ for ( i = 0; i < size; i++ )
  {
  receive_data( &firm_buffer, 1 );
  *ptr++ = firm_buffer[0];
@@ -529,7 +634,7 @@ void allocate_image( uint8_t width, uint8_t height )
  uint16_t i = 0;
 
  img = Malloc( sizeof( uint8_t ) * size );
- for( i = 0; i < size; i++ )
+ for ( i = 0; i < size; i++ )
  img[i] = 0x00;
 
 }
@@ -539,7 +644,7 @@ void receive_data(uint8_t* dataPtr, uint16_t dataSize)
 
   (GPIO_PIN17_bit = 1) ;
 
- while(SPIS1_RX_FIFO_COUNT < dataSize) ;
+ while (SPIS1_RX_FIFO_COUNT < dataSize) ;
 
  STREAMIN_B(dataPtr, &SPIS1_DATA, dataSize);
 
@@ -565,7 +670,7 @@ void spi_bus_init()
 
 
 
- for( i = 0; i < sizeof( output_pins ); i++ )
+ for ( i = 0; i < sizeof( output_pins ); i++ )
  {
  GPIO_Pin_Config( output_pins[i],
  _GPIO_DIR_OUTPUT,
@@ -578,10 +683,10 @@ void spi_bus_init()
 
  PWR_EnableModule( _PWR_CLK_SPIS0 );
 
- for( i = 0; i < sizeof( slave_pins ); i++ )
+ for ( i = 0; i < sizeof( slave_pins ); i++ )
  {
  GPIO_Pin_Config( slave_pins[i],
- ( i == _GPIO_PIN_NUM_39 ) ? _GPIO_DIR_OUTPUT :_GPIO_DIR_INPUT,
+ ( i == _GPIO_PIN_NUM_39 ) ? _GPIO_DIR_OUTPUT : _GPIO_DIR_INPUT,
  _GPIO_CFG_SLEW_RATE_FAST |
  _GPIO_CFG_SCHMITT_DISABLE |
  _GPIO_CFG_PULL_NONE |
@@ -619,7 +724,7 @@ void system_setup( uint8_t width, uint8_t height )
 
 
  GPIO_Digital_Output(&GPIO_PORT_08_15, _GPIO_PINMASK_ALL);
-#line 501 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 599 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
  GPIO_Digital_Output(&GPIO_PORT_32_39, _GPIO_PINMASK_0 | _GPIO_PINMASK_1 | _GPIO_PINMASK_2 | _GPIO_PINMASK_3 );
  GPIO_Digital_Output(&GPIO_PORT_40_47, _GPIO_PINMASK_4 | _GPIO_PINMASK_5 );
 
@@ -659,12 +764,12 @@ void set_brightness( char brightness )
  pwm_period = PWM_Init( 200000 );
  tmpPwmInitState = _PWM_INIT_STATE_0;
 
- if(brightness == 0)
+ if (brightness == 0)
  {
  tmpPwmInitState = _PWM_INIT_STATE_1;
  PWM_DisableOutput();
  }
- else if(brightness == 100)
+ else if (brightness == 100)
  {
  PWM_DisableOutput();
  }
@@ -682,9 +787,9 @@ void init_parameters( uint8_t width, uint8_t height )
 {
  pan_width = width;
  pan_height = height;
- p_height = height * 16;
+ p_height = height * 32;
  p_width = width * 32;
- shift_reg = 32 * ( width * height );
+ shift_reg = 64 * ( width * height );
 
 }
 
@@ -703,12 +808,10 @@ void refresh( void )
  uint16_t p;
 
  reset_row();
-
- for( i = 0, j = 8; i < 8; i++, j++ )
+ for ( i = 0, j = 8; i < 8; i++, j++ )
  {
-
-  Led_Matrix_STB = 0; asm nop; asm nop; asm nop; ;
- for( p = 0; p < shift_reg; p++ )
+  Led_Matrix_STB = 0; ;
+ for ( p = 0; p < shift_reg; p++ )
  {
  Led_Matrix_Data = 0;
  Led_Matrix_Data |= ( FB[( shift_reg * j ) + p] & 4 ) << 1;
@@ -717,51 +820,46 @@ void refresh( void )
  Led_Matrix_Data |= ( FB[( shift_reg * i ) + p] & 4 ) >> 2;
  Led_Matrix_Data |= ( FB[( shift_reg * i ) + p] & 2 );
  Led_Matrix_Data |= ( FB[( shift_reg * i ) + p] & 1 ) << 2;
-  Led_Matrix_Clk = 0; Delay_us(1); Led_Matrix_Clk = 1; Delay_us(1); Led_Matrix_Clk = 0; ;
+  Delay_us(1); Led_Matrix_Clk = 1; asm nop; asm nop; asm nop; Delay_us(1); Led_Matrix_Clk = 0; ;
  }
-  Delay_us(1); Led_Matrix_STB = 1; ;
-
  inc_row();
-
+  Led_Matrix_STB = 1; ;
  }
-
 }
 
 void inc_row( void )
 {
 
- if(currRow == 7)
- currRow = -1;
+ if (currRow == ROW_EIGHT )
+ currRow = ROW_ONE;
  else
  currRow++;
 
+
+
  Led_Matrix_OE = 1;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
  Led_Matrix_A = currRow;
  Led_Matrix_B = currRow >> 1;
  Led_Matrix_C = currRow >> 2;
  Led_Matrix_D = currRow >> 3;
+#line 720 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
  Led_Matrix_OE = 0;
+
 
 }
 
 void reset_row( void )
 {
- currRow = -1;
+ currRow = ROW_ONE;
 
  Led_Matrix_OE = 1;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
- asm nop; asm nop; asm nop;
  Led_Matrix_A = currRow;
  Led_Matrix_B = currRow >> 1;
  Led_Matrix_C = currRow >> 2;
  Led_Matrix_D = currRow >> 3;
+#line 738 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
  Led_Matrix_OE = 0;
+
 
 }
 
@@ -771,11 +869,11 @@ void clear_frame_buffer( void )
  uint8_t *ptr = FB;
  uint8_t zero = 0x00;
 
- for( i = 0; i < ( p_width * p_height ); i++ )
+ for ( i = 0; i < ( p_width * p_height ); i++ )
  ptr[i] = zero;
 }
 
-void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_col )
+void write_text( uint8_t *text, color_t color, uint16_t start_row, uint16_t start_col )
 {
  char *ptr = text;
  uint8_t text_frame[256] = { 0 };
@@ -784,47 +882,47 @@ void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_
  uint8_t cnt = 0;
  uint8_t font_width;
  uint8_t color_buffer = 0;
- uint8_t curr_row = start_row;
- uint8_t curr_col = start_col;
+ uint16_t curr_row = start_row;
+ uint16_t curr_col = start_col;
 
- if( ptr ==  ((void *)0)  )
+ if ( ptr ==  ((void *)0)  )
  return;
 
- if( color.red > 0 )
+ if ( color.red > 0 )
  color_buffer |= 0x04;
- if( color.green > 0 )
+ if ( color.green > 0 )
  color_buffer |= 0x02;
- if( color.blue > 0 )
+ if ( color.blue > 0 )
  color_buffer |= 0x01;
 
- while( *ptr !=  ((void *)0)  )
+ while ( *ptr !=  ((void *)0)  )
  {
  cnt = 0;
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  temp = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt ];
  temp_2 = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt + 1 ];
- for( j = 0; j < 8; j++ )
+ for ( j = 0; j < 8; j++ )
  {
- if( ( temp & 0x80 ) > 0x00 )
+ if ( ( temp & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp = ( temp << 1 );
  }
- for( j = 8; j < 16; j++ )
+ for ( j = 8; j < 16; j++ )
  {
- if( ( temp_2 & 0x80 ) > 0x00 )
+ if ( ( temp_2 & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp_2 = ( temp_2 << 1 );
  }
- cnt+= 2;
+ cnt += 2;
  }
  font_width = 0;
  font_width = Dejavu18_Widths[ *ptr - 32 ];
- if( ( curr_col + font_width ) >= p_width )
+ if ( ( curr_col + font_width ) >= p_width )
  {
  curr_row += 16;
  curr_col = start_col;
@@ -832,7 +930,7 @@ void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_
  write_letter( text_frame, font_width, curr_row, curr_col );
  curr_col += font_width;
 
- if( curr_col >= shift_reg )
+ if ( curr_col >= shift_reg )
  {
  curr_row += 16;
  curr_col = start_col;
@@ -842,7 +940,7 @@ void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_
 
 }
 
-void write_letter( uint8_t *text_frame, uint8_t width, uint8_t current_row, uint8_t current_col )
+void write_letter( uint8_t *text_frame, uint8_t width, uint16_t current_row, uint16_t current_col )
 {
  uint8_t k, m;
  char red, green, blue;
@@ -855,16 +953,15 @@ void write_letter( uint8_t *text_frame, uint8_t width, uint8_t current_row, uint
  my_color.blue = 0;
 
 
- for( m = 0; m < width; m++ )
+ for ( m = 0; m < width; m++ )
  {
 
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  red = text_frame[( k * 16 + m )] & 0x04;
  green = text_frame[( k * 16 + m )] & 0x02;
  blue = text_frame[( k * 16 + m )] & 0x01;
  write_pixel( row + k, col + m, red, green, blue );
-
  }
 
  }
@@ -879,12 +976,12 @@ void image_load( uint8_t *bmp, uint8_t width, uint8_t height )
  int row, column;
  cnt = 0;
 
- for(row = 0; row < 16; row++)
- for(column = 0; column < 64; column++)
+ for (row = 0; row < 16; row++)
+ for (column = 0; column < 64; column++)
  {
- tmpCol = bmp[cnt] + (bmp[cnt+1] << 8);
+ tmpCol = bmp[cnt] + (bmp[cnt + 1] << 8);
 
- if(tmpCol != 0)
+ if (tmpCol != 0)
  asm nop;
 
  red = tmpCol >> 11;
@@ -904,23 +1001,23 @@ void scroll_image_right( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t s
  uint8_t buffer = 0;
  cnt = 0;
 
- for( row = 0; row < 16; row++ )
- for(column = 0; column < ( ( height * width ) * 32 ); column++)
+ for ( row = 0; row < 16; row++ )
+ for (column = 0; column < ( ( height * width ) * 32 ); column++)
  {
  buffer = 0;
- tmpCol = bmp[cnt] + (bmp[cnt+1] << 8);
+ tmpCol = bmp[cnt] + (bmp[cnt + 1] << 8);
 
- if(tmpCol != 0)
+ if (tmpCol != 0)
  asm nop;
 
  red = tmpCol >> 11;
  green = (tmpCol & 0x7FF) >> 5;
  blue = tmpCol & 0x1F;
- if( ( red & 0x18 ) > 0 )
+ if ( ( red & 0x18 ) > 0 )
  buffer |= 0x04;
- if( ( green & 0x38 ) > 0 )
+ if ( ( green & 0x38 ) > 0 )
  buffer |= 0x02;
- if( ( blue & 0x18 ) > 0 )
+ if ( ( blue & 0x18 ) > 0 )
  buffer |= 0x01;
  image_frame[( row * shift_reg ) + column] = buffer;
  cnt += 2;
@@ -935,11 +1032,11 @@ void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16
  uint8_t buffer = 0;
  char red, blue, green;
 
- for( m = 1; m <= width; m++ )
+ for ( m = 1; m <= width; m++ )
  {
  display_shift_right();
 
- for( k = 0; k < height; k++ )
+ for ( k = 0; k < height; k++ )
  {
  buffer = bmp[( ( k + 1 ) * width ) - m];
  red = ( buffer & 0x04 );
@@ -948,7 +1045,7 @@ void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16
  write_pixel( k, 0, red, green, blue );
  }
 
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
 
  }
@@ -964,23 +1061,23 @@ void scroll_image_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t sp
  uint8_t buffer = 0;
  cnt = 0;
 
- for(row = 0; row < 16; row++)
- for(column = 0; column < ( ( height * width ) * 32 ); column++)
+ for (row = 0; row < 16; row++)
+ for (column = 0; column < ( ( height * width ) * 32 ); column++)
  {
  buffer = 0;
- tmpCol = bmp[cnt] + (bmp[cnt+1] << 8);
+ tmpCol = bmp[cnt] + (bmp[cnt + 1] << 8);
 
- if(tmpCol != 0)
+ if (tmpCol != 0)
  asm nop;
 
  red = tmpCol >> 11;
  green = (tmpCol & 0x7FF) >> 5;
  blue = tmpCol & 0x1F;
- if( ( red & 0x18 ) > 0 )
+ if ( ( red & 0x18 ) > 0 )
  buffer |= 0x04;
- if( ( green & 0x38 ) > 0 )
+ if ( ( green & 0x38 ) > 0 )
  buffer |= 0x02;
- if( ( blue & 0x18 ) > 0 )
+ if ( ( blue & 0x18 ) > 0 )
  buffer |= 0x01;
  image_frame[( row * shift_reg ) + column] = buffer;
  cnt += 2;
@@ -997,11 +1094,11 @@ void scroll_image_onto_right( uint8_t *bmp, uint8_t width, uint8_t height, uint1
  uint8_t buffer = 0;
  char red, blue, green;
 
- for( m = 0; m < width; m++ )
+ for ( m = 0; m < width; m++ )
  {
  display_shift_left();
 
- for( k = 0; k < height; k++ )
+ for ( k = 0; k < height; k++ )
  {
  buffer = bmp[( k * width + m )];
  red = ( buffer & 0x04 );
@@ -1010,7 +1107,7 @@ void scroll_image_onto_right( uint8_t *bmp, uint8_t width, uint8_t height, uint1
  write_pixel( k, ( p_width - 1 ), red, green, blue );
  }
 
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
 
  }
@@ -1027,40 +1124,40 @@ void scroll_text_left( char *text, color_t color, uint16_t speed )
  uint8_t font_width;
  uint8_t color_buffer = 0;
 
- if( ptr ==  ((void *)0)  )
+ if ( ptr ==  ((void *)0)  )
  return;
 
- if( color.red > 0 )
+ if ( color.red > 0 )
  color_buffer |= 0x04;
- if( color.green > 0 )
+ if ( color.green > 0 )
  color_buffer |= 0x02;
- if( color.blue > 0 )
+ if ( color.blue > 0 )
  color_buffer |= 0x01;
 
- while( *ptr !=  ((void *)0)  )
+ while ( *ptr !=  ((void *)0)  )
  {
  cnt = 0;
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  temp = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt ];
  temp_2 = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt + 1 ];
- for( j = 0; j < 8; j++ )
+ for ( j = 0; j < 8; j++ )
  {
- if( ( temp & 0x80 ) > 0x00 )
+ if ( ( temp & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp = ( temp << 1 );
  }
- for( j = 8; j < 16; j++ )
+ for ( j = 8; j < 16; j++ )
  {
- if( ( temp_2 & 0x80 ) > 0x00 )
+ if ( ( temp_2 & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp_2 = ( temp_2 << 1 );
  }
- cnt+= 2;
+ cnt += 2;
  }
  font_width = 0;
  font_width = Dejavu18_Widths[ *ptr - 32 ];
@@ -1076,9 +1173,9 @@ void shift_lett_onto_right( uint8_t *text_frame, uint8_t font_width, uint16_t sp
  char red, green, blue;
  uint8_t buffer = 0;
 
- for( m = 0; m < font_width; m++ )
+ for ( m = 0; m < font_width; m++ )
  {
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  buffer = text_frame[( k * 16 + m )];
  red = ( buffer & 0x04 );
@@ -1087,7 +1184,7 @@ void shift_lett_onto_right( uint8_t *text_frame, uint8_t font_width, uint16_t sp
  write_pixel( k, ( p_width - 1 ), red, green, blue );
  }
 
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
 
  display_shift_left();
@@ -1105,48 +1202,48 @@ void scroll_text_right( char *text, color_t color, uint16_t speed )
  uint8_t color_buffer = 0;
  uint8_t text_length = 0;
 
- if( ptr ==  ((void *)0)  )
+ if ( ptr ==  ((void *)0)  )
  return;
 
- if( color.red > 0 )
+ if ( color.red > 0 )
  color_buffer |= 0x04;
- if( color.green > 0 )
+ if ( color.green > 0 )
  color_buffer |= 0x02;
- if( color.blue > 0 )
+ if ( color.blue > 0 )
  color_buffer |= 0x01;
 
- while( *ptr !=  ((void *)0)  )
+ while ( *ptr !=  ((void *)0)  )
  {
  ptr++;
  text_length++;
  }
 
  ptr--;
- while( text_length > 0 )
+ while ( text_length > 0 )
  {
  text_length--;
  cnt = 0;
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  temp = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt ];
  temp_2 = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt + 1 ];
- for( j = 0; j < 8; j++ )
+ for ( j = 0; j < 8; j++ )
  {
- if( ( temp & 0x80 ) > 0x00 )
+ if ( ( temp & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp = ( temp << 1 );
  }
- for( j = 8; j < 16; j++ )
+ for ( j = 8; j < 16; j++ )
  {
- if( ( temp_2 & 0x80 ) > 0x00 )
+ if ( ( temp_2 & 0x80 ) > 0x00 )
  text_frame[( k * 16 ) + j] = color_buffer;
  else
  text_frame[( k * 16 ) + j] = 0x00;
  temp_2 = ( temp_2 << 1 );
  }
- cnt+= 2;
+ cnt += 2;
  }
  font_width = 0;
  font_width = Dejavu18_Widths[ *ptr - 32 ];
@@ -1163,9 +1260,9 @@ void shift_lett_onto_left( uint8_t *text_frame, uint8_t font_width, uint16_t spe
  char red, green, blue;
  uint8_t buffer = 0;
 
- for( m = difference; m < ( 16 - font_width ) + font_width ; m++ )
+ for ( m = difference; m < ( 16 - font_width ) + font_width ; m++ )
  {
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  buffer = text_frame[k * 16 + ( 15 - m )];
  red = ( buffer & 0x04 );
@@ -1174,7 +1271,7 @@ void shift_lett_onto_left( uint8_t *text_frame, uint8_t font_width, uint16_t spe
  write_pixel( k, 0, red, green, blue );
  }
 
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
 
  display_shift_right();
@@ -1191,61 +1288,61 @@ void load_text( char *text, uint8_t text_width, uint8_t text_height, color_t col
  uint8_t cnt = 0;
  uint8_t color_buffer = 0;
 
- if( ptr ==  ((void *)0)  )
+ if ( ptr ==  ((void *)0)  )
  return;
 
- if( color.red > 0 )
+ if ( color.red > 0 )
  color_buffer |= 0x04;
- if( color.green > 0 )
+ if ( color.green > 0 )
  color_buffer |= 0x02;
- if( color.blue > 0 )
+ if ( color.blue > 0 )
  color_buffer |= 0x01;
 
- for( k = 0; k < 16; k++ )
+ for ( k = 0; k < 16; k++ )
  {
  temp = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + cnt ];
  temp_2 = Dejavu18_Bitmaps[ ( *ptr * 32 ) - ( 32 * 32 ) + ( cnt + 1 ) ];
- for( j = 0; j < 8; j++ )
+ for ( j = 0; j < 8; j++ )
  {
- if( ( temp & 0x80 ) > 0 )
+ if ( ( temp & 0x80 ) > 0 )
  FB[(k * 64) + j] = color_buffer;
  else
  FB[(k * 64) + j] = 0x00;
  temp = ( temp << 1 );
  }
- for( j = 8; j < 16; j++ )
+ for ( j = 8; j < 16; j++ )
  {
- if( ( temp_2 & 0x80 ) > 0 )
+ if ( ( temp_2 & 0x80 ) > 0 )
  FB[(k * 64) + j] = color_buffer;
  else
  FB[(k * 64) + j] = 0x00;
  temp_2 = ( temp_2 << 1 );
  }
- cnt+= 2;
+ cnt += 2;
  }
 
 }
 
 void scroll_off_screen_left( uint16_t speed )
 {
- uint8_t p, i;
+ uint16_t p, i;
 
- for( i = 0; i < p_width; i++ )
+ for ( i = 0; i < p_width; i++ )
  {
  display_shift_left();
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
  }
 }
 
 void scroll_off_screen_right( uint16_t speed )
 {
- uint8_t p, i;
+ uint16_t p, i;
 
- for( i = 0; i < p_width; i++ )
+ for ( i = 0; i < p_width; i++ )
  {
  display_shift_right();
- for( p = 0; p < speed; p++ )
+ for ( p = 0; p < speed; p++ )
  refresh();
  }
 
@@ -1253,36 +1350,20 @@ void scroll_off_screen_right( uint16_t speed )
 }
 void display_shift_left( void )
 {
- uint8_t row = 0;
- uint8_t column = 0;
- uint8_t temp_col = 0;
- uint8_t temp_col_2 = 0;
- uint8_t temp_row = 0;
+ uint16_t row = 0;
+ uint16_t column = 0;
+ uint16_t temp_col_one = 0;
+ uint16_t temp_col_two = 0;
  uint8_t buffer = 0;
- uint8_t incrementer = 0;
- uint8_t starter = 0;
- char red, green, blue;
 
- for( row = 0; row < p_height; row++ )
+ for ( row = 0; row < p_height; row++ )
  {
- for( column = 0; column <= ( p_width - 1 ); column++ )
+ for ( column = 0; column <= ( p_width - 1 ); column++ )
  {
  buffer = 0;
- temp_col = column;
- temp_col_2 = column + 1;
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- temp_col+= ( temp_col / 32 ) * 32;
- temp_col_2+= ( temp_col_2 / 32 ) * 32;
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = FB[ incrementer + ( starter * shift_reg ) + temp_col_2];
+ temp_col_one = column;
+ temp_col_two = column + 1;
+ FB[ get_coord_index( row, temp_col_one ) ] = FB[ get_coord_index( row, temp_col_two ) ];
  }
  erase_pixel( row, ( p_width - 1 ) );
  }
@@ -1290,36 +1371,20 @@ void display_shift_left( void )
 }
 void display_shift_right( void )
 {
- uint8_t row = 0;
- uint8_t column = 0;
- uint8_t temp_col = 0;
- uint8_t temp_col_2 = 0;
- uint8_t temp_row = 0;
+ uint16_t row = 0;
+ uint16_t column = 0;
+ uint16_t temp_col_one = 0;
+ uint16_t temp_col_two = 0;
  uint8_t buffer = 0;
- uint8_t incrementer = 0;
- uint8_t starter = 0;
- char red, green, blue;
 
- for( row = 0; row < p_height; row++ )
+ for ( row = 0; row < p_height; row++ )
  {
- for( column = ( p_width - 1 ); column > 0; column-- )
+ for ( column = ( p_width - 1 ); column > 0; column-- )
  {
  buffer = 0;
- temp_col = column;
- temp_col_2 = column - 1;
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- temp_col+= ( temp_col / 32 ) * 32;
- temp_col_2+= ( temp_col_2 / 32 ) * 32;
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = FB[ incrementer + ( starter * shift_reg ) + temp_col_2];
+ temp_col_one = column;
+ temp_col_two = column - 1;
+ FB[ get_coord_index( row, temp_col_one ) ] = FB[ get_coord_index( row, temp_col_two ) ];
  }
  erase_pixel( row, 0 );
  }
@@ -1328,173 +1393,62 @@ void display_shift_right( void )
 
 void display_shift_up( void )
 {
- uint8_t row = 0;
- uint8_t column = 0;
- uint8_t temp_col = 0;
- uint8_t temp_row = 0;
+ uint16_t row = 0;
+ uint16_t column = 0;
+ uint16_t temp_col = 0;
+ uint16_t temp_row = 0;
  uint8_t buffer = 0;
- uint8_t incrementer = 0;
- uint8_t starter = 0;
- char red, green, blue;
 
- for( row = 0; row < p_height; row++ )
+ for ( row = 0; row < p_height; row++ )
  {
- for( column = ( p_width - 1 ); column > 0; column-- )
+ for ( column = ( p_width - 1 ); column > 0; column-- )
  {
- if( row == ( p_height - 1 ) )
+ if ( row == ( p_height - 1 ) )
  erase_pixel( row, column );
  else
  {
  buffer = 0;
  temp_col = column;
  temp_row = row + 1;
- if( temp_row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = temp_row % 16;
- incrementer = ( temp_row / 16 ) * 32;
- }
- if( temp_col == 0 )
- temp_col += 0;
- else
- temp_col+= ( temp_col / 32 ) * 32;
- buffer = FB[ incrementer + ( starter * shift_reg ) + temp_col];
-
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = buffer;
+ buffer = FB[ get_coord_index( temp_row, temp_col ) ];
+ FB[ get_coord_index( row, temp_col ) ] = buffer;
  }
  }
  buffer = 0;
  temp_col = 0;
  temp_row = row + 1;
- if( temp_row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = temp_row % 16;
- incrementer = ( temp_row / 16 ) * 32;
- }
- if( temp_col == 0 )
- temp_col += 0;
- else
- temp_col+= ( temp_col / 32 ) * 32;
- buffer = FB[ incrementer + ( starter * shift_reg ) + temp_col];
-
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = buffer;
+ buffer = FB[ get_coord_index( temp_row, temp_col ) ];
+ FB[ get_coord_index( row, temp_col ) ] = buffer;
  }
 
 }
 
 void display_shift_down( void )
 {
- uint8_t i = 0;
- uint8_t row = 0;
- uint8_t column = 0;
- uint8_t temp_col = 0;
- uint8_t temp_row = 0;
+ uint16_t i = 0;
+ uint16_t row = 0;
+ uint16_t column = 0;
+ uint16_t temp_col = 0;
+ uint16_t temp_row = 0;
  uint8_t buffer = 0;
- uint8_t incrementer = 0;
- uint8_t starter = 0;
- char red, green, blue;
 
- for( row = ( p_height - 1 ); row > 0; row-- )
+ for ( row = ( p_height - 1 ); row > 0; row-- )
  {
- for( column = ( p_width - 1 ); column > 0; column-- )
+ for ( column = ( p_width - 1 ); column > 0; column-- )
  {
-
-
-
-
  buffer = 0;
  temp_col = column;
  temp_row = row - 1;
- if( temp_row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = temp_row % 16;
- incrementer = ( temp_row / 16 ) * 32;
- }
- if( temp_col == 0 )
- temp_col += 0;
- else
- temp_col+= ( temp_col / 32 ) * 32;
- buffer = FB[ incrementer + ( starter * shift_reg ) + temp_col];
-
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = buffer;
-
+ buffer = FB[ get_coord_index( temp_row, temp_col ) ];
+ FB[ get_coord_index( row, temp_col ) ] = buffer;
  }
  buffer = 0;
  temp_col = 0;
  temp_row = row - 1;
- if( temp_row == 0 )
- {
- starter = 0;
- incrementer = 0;
+ buffer = FB[ get_coord_index( temp_row, temp_col ) ];
+ FB[ get_coord_index( row, temp_col ) ] = buffer;
  }
- else
- {
- starter = temp_row % 16;
- incrementer = ( temp_row / 16 ) * 32;
- }
- if( temp_col == 0 )
- temp_col += 0;
- else
- temp_col+= ( temp_col / 32 ) * 32;
- buffer = FB[ incrementer + ( starter * shift_reg ) + temp_col];
-
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- FB[ incrementer + ( starter * shift_reg ) + temp_col] = buffer;
- }
- for( i = 0; i < p_width; i++ )
+ for ( i = 0; i < p_width; i++ )
  erase_pixel( 0, i );
 
 }
@@ -1503,10 +1457,10 @@ void scroll_off_screen_up( uint16_t speed )
 {
  uint16_t i, j;
 
- for( i = 0; i < p_height; i++ )
+ for ( i = 0; i < p_height; i++ )
  {
  display_shift_up();
- for( j = 0; j < speed; j++ )
+ for ( j = 0; j < speed; j++ )
  refresh();
  }
 }
@@ -1515,86 +1469,48 @@ void scroll_off_screen_down( uint16_t speed )
 {
  uint16_t i, j;
 
- for( i = 0; i < p_height; i++ )
+ for ( i = 0; i < p_height; i++ )
  {
  display_shift_down();
- for( j = 0; j < speed; j++ )
+ for ( j = 0; j < speed; j++ )
  refresh();
  }
 
 }
 
-void write_pixel_img( int row, int column, char red, char green, char blue)
+void write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue)
 {
  uint8_t buffer = 0;
- uint8_t incrementer;
- uint8_t starter;
 
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- if( ( red & 0x18 ) > 0 )
+ if ( ( red & 0x18 ) > 0 )
  buffer |= 0x04;
- if( ( green & 0x38 ) > 0 )
+ if ( ( green & 0x38 ) > 0 )
  buffer |= 0x02;
- if( ( blue & 0x18 ) > 0 )
+ if ( ( blue & 0x18 ) > 0 )
  buffer |= 0x01;
- column+= ( column / 32 ) * 32;
- FB[ incrementer + ( starter * shift_reg ) + column] |= buffer;
+ FB[ get_coord_index( row, column ) ] = buffer;
 }
 
-void write_pixel( int row, int column, char red, char green, char blue)
+void write_pixel( uint16_t row, uint16_t column, char red, char green, char blue)
 {
  uint8_t buffer = 0;
- uint8_t incrementer;
- uint8_t starter;
 
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- if( red > 0 )
+ if ( red > 0 )
  buffer |= 0x04;
- if( green > 0 )
+ if ( green > 0 )
  buffer |= 0x02;
- if( blue > 0 )
+ if ( blue > 0 )
  buffer |= 0x01;
- column+= ( column / 32 ) * 32;
- FB[ incrementer + ( starter * shift_reg ) + column] |= buffer;
+
+ FB[ get_coord_index( row, column ) ] = buffer;
 
 }
 
-void erase_pixel( int row, int column )
+void erase_pixel( uint16_t row, uint16_t column )
 {
  uint8_t buffer = 0;
- uint8_t incrementer;
- uint8_t starter;
 
- if( row == 0 )
- {
- starter = 0;
- incrementer = 0;
- }
- else
- {
- starter = row % 16;
- incrementer = ( row / 16 ) * 32;
- }
- column+= ( column / 32 ) * 32;
- FB[ incrementer + ( starter * shift_reg ) + column] = 0x00;
+ FB[get_coord_index( row, column ) ] = 0x00;
 }
 
 void setup_timer( void )

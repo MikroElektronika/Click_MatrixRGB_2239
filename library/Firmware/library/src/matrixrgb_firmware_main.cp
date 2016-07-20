@@ -1,6 +1,6 @@
 #line 1 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware_main.c"
 #line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
 
 
 
@@ -49,7 +49,7 @@ typedef unsigned long int uintptr_t;
 
 typedef signed long long intmax_t;
 typedef unsigned long long uintmax_t;
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
 
 
 
@@ -60,7 +60,7 @@ typedef long ptrdiff_t;
 
 typedef unsigned long wchar_t;
 #line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
-#line 1 "c:/c4w/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
 #line 11 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
 extern const uint8_t Dejavu18_Bitmaps[2912];
 extern uint8_t Dejavu18_Widths[91];
@@ -100,11 +100,11 @@ void scroll_image_right( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t s
 #line 305 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
 #line 319 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void write_pixel( int row, int column, char red, char green, char blue);
+void write_pixel( uint16_t row, uint16_t column, char red, char green, char blue);
 #line 336 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void write_pixel_img( int row, int column, char red, char green, char blue);
+void write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue);
 #line 347 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void erase_pixel( int row, int column );
+void erase_pixel( uint16_t row, uint16_t column );
 #line 360 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void load_text( char *text, uint8_t text_width, uint8_t text_height, color_t color );
 #line 373 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
@@ -178,12 +178,11 @@ void clear_screen_command( void );
 #line 698 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
 void allocate_image( uint8_t width, uint8_t height );
 
-
 void write_text_command( void );
 
-void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_col );
+void write_text( uint8_t *text, color_t color, uint16_t start_row, uint16_t start_col );
 
-void write_letter( uint8_t *bmp, uint8_t width, uint8_t current_row, uint8_t current_col );
+void write_letter( uint8_t *bmp, uint8_t width, uint16_t current_row, uint16_t current_col );
 #line 3 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware_main.c"
 enum
 {
@@ -208,7 +207,7 @@ enum
  CLR_SCRN_CMD = 0x13,
  WRITE_TEXT_CMD = 0x14
 
-}cmd_t;
+} cmd_t;
 
 uint8_t buffer[65] = { 0 };
 uint8_t setup_flag = 0;
@@ -219,11 +218,11 @@ void main()
  spi_bus_init();
  Delay_ms(300);
 
- while(1)
+ while (1)
  {
  receive_data( &buffer, 1 );
 
- switch( buffer[0] )
+ switch ( buffer[0] )
  {
  case SETUP_CMD:
  setup_command();

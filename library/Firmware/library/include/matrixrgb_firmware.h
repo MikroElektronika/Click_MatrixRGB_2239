@@ -316,7 +316,7 @@ void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16
  * @param[in] green     -   Green pixel ( 0 or 1 )
  * @param[in] blue      -   Blue pixel ( 0 or 1 )
  */
-void write_pixel( int row, int column, char red, char green, char blue);
+void write_pixel( uint16_t row, uint16_t column, char red, char green, char blue);
 
 /**
  * @brief <h3> Write Pixel Image </h3>
@@ -333,7 +333,7 @@ void write_pixel( int row, int column, char red, char green, char blue);
  * @param[in] green     -   Green pixel ( 6 bit resolution but display only uses 1 or 0 )
  * @param[in] blue      -   Blue pixel ( 5 bit resolution but display only uses 1 or 0 )
  */
-void write_pixel_img( int row, int column, char red, char green, char blue);
+void write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue);
 
 /**
  * @brief <h3> Erase Pixel </h3>
@@ -344,7 +344,7 @@ void write_pixel_img( int row, int column, char red, char green, char blue);
  * @param[in] row       -   Row of display
  * @param[in] column    -   Column of display
  */
-void erase_pixel( int row, int column );
+void erase_pixel( uint16_t row, uint16_t column );
 
 /**
  * @brief <h3> Load Text </h3>
@@ -697,190 +697,11 @@ void clear_screen_command( void );
  */
 void allocate_image( uint8_t width, uint8_t height );
 
-
 void write_text_command( void );
 
-void write_text( uint8_t *text, color_t color, uint8_t start_row, uint8_t start_col );
+void write_text( uint8_t *text, color_t color, uint16_t start_row, uint16_t start_col );
 
-void write_letter( uint8_t *bmp, uint8_t width, uint8_t current_row, uint8_t current_col );
-/******************************** Firmware ********************************************
-#include "matrixrgb_firmware.h"
-
-enum
-{
-    SETUP_CMD = 0x01,
-    IMAGE_LOAD_CMD,
-    SCROLL_IMG_LEFT_CMD,
-    SCROLL_IMG_RIGHT_CMD,
-    WRITE_PXL_CMD,
-    WRITE_PXL_IMG_CMD,
-    ERASE_PXL_CMD,
-    SCROLL_TEXT_LEFT_CMD,
-    SCROLL_TEXT_RIGHT_CMD,
-    DISPLAY_SHIFT_UP_CMD,
-    DISPLAY_SHIFT_DOWN_CMD,
-    DISPLAY_SHIFT_RIGHT_CMD,
-    DISPLAY_SHIFT_LEFT_CMD,
-    DISPLAY_SCROLL_OFF_SCRN_UP_CMD,
-    DISPLAY_SCROLL_OFF_SCRN_DWN_CMD,
-    DISPLAY_SCROLL_OFF_SCRN_LEFT_CMD,
-    DISPLAY_SCROLL_OFF_SCRN_RIGHT_CMD,
-    REFRESH_CMD,
-    CLR_SCRN_CMD
-
-}cmd_t;
-
-uint8_t buffer[4]  = { 0 };   // Buffer for SPI Slave FIFO.. 64 bytes long
-
-void main()
-{
-    spi_bus_init();
-
-    while(1)
-    {
-        receive_data( &buffer, 1 );
-
-        switch( buffer[0] )
-        {
-            case SETUP_CMD:
-                setup_command();
-                break;
-            case IMAGE_LOAD_CMD:
-                image_load_command();
-                break;
-            case SCROLL_IMG_LEFT_CMD:
-                scroll_img_left_command();
-                break;
-            case SCROLL_IMG_RIGHT_CMD:
-                scroll_img_right_command();
-                break;
-            case WRITE_PXL_CMD:
-                write_pxl_command();
-                break;
-            case WRITE_PXL_IMG_CMD:
-                write_pxl_img_command();
-                break;
-            case ERASE_PXL_CMD:
-                erase_pxl_command();
-                break;
-            case SCROLL_TEXT_LEFT_CMD:
-                scroll_text_left_command();
-                break;
-            case SCROLL_TEXT_RIGHT_CMD:
-                scroll_text_right_command();
-                break;
-            case DISPLAY_SHIFT_UP_CMD:
-                display_shift_up_command();
-                break;
-            case DISPLAY_SHIFT_DOWN_CMD:
-                display_shift_down_command();
-                break;
-            case DISPLAY_SHIFT_RIGHT_CMD:
-                display_shift_right_command();
-                break;
-            case DISPLAY_SHIFT_LEFT_CMD:
-                display_shift_left_command();
-                break;
-            case DISPLAY_SCROLL_OFF_SCRN_UP_CMD:
-                display_scroll_off_scrn_up_command();
-                break;
-            case DISPLAY_SCROLL_OFF_SCRN_DWN_CMD:
-                display_scroll_off_scrn_down_command();
-                break;
-            case DISPLAY_SCROLL_OFF_SCRN_LEFT_CMD:
-                display_scroll_off_scrn_left_command();
-                break;
-            case DISPLAY_SCROLL_OFF_SCRN_RIGHT_CMD:
-                display_scroll_off_scrn_right_command();
-                break;
-            case REFRESH_CMD:
-                refresh();
-                break;
-            case CLR_SCRN_CMD:
-                clear_screen_command();
-                break;
-            default:
-                break;
-        }
-    }
-}
-  
-/**************************************** Application Side ( ARM ) *****************************************
-#include "matrixrgb_hw.h"
-#include "Resources.h"
-
-sbit MATRIXRGB_CS       at GPIOD_ODR.B13;
-sbit MATRIXRGB_READY    at GPIOD_IDR.B10;
-sbit MATRIXRGB_RST      at GPIOC_ODR.B2;
-
-void system_setup( char brightness, uint8_t width, uint8_t height );
-
-void main()
-{
-    uint8_t count = 3;
-    uint8_t i     = 0;
-    color_t my_color;
-
-    system_setup( 100, 2, 1 );
-
-    matrixrgb_scroll_img_right( MikroeBITMAP_bmp, 64, 16, 40 );
-    matrixrgb_scroll_off_scrn_down( 30 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_text_left( "Matrix ", my_color, 17, 10 );
-    matrixrgb_set_color( &my_color, 1, 0, 0 );
-    matrixrgb_scroll_text_left( "R", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 0, 1, 0 );
-    matrixrgb_scroll_text_left( "G", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 0, 0, 1 );
-    matrixrgb_scroll_text_left( "B ", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_off_scrn_up( 30 );
-    matrixrgb_set_color( &my_color, 1, 0, 0 );
-    matrixrgb_scroll_text_left( "By: ", my_color, 17, 4 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_text_left( "Corey ", my_color, 17, 6 );
-    matrixrgb_set_color( &my_color, 0, 0, 1 );
-    matrixrgb_scroll_text_left( "Lakey ", my_color, 17, 6 );
-    matrixrgb_scroll_off_scrn_left( 25 );
-    matrixrgb_scroll_img_right( MikroeBITMAP_bmp, 64, 16, 25 );
-    matrixrgb_scroll_off_scrn_right( 10 );
-
-    while(1)
-    {
-        matrixrgb_set_color( &my_color, 1, 1, 1 );
-        matrixrgb_scroll_text_left( "Matrix", my_color, 20, 10 );
-        matrixrgb_set_color( &my_color, 1, 0, 0 );
-        matrixrgb_scroll_text_left( "R", my_color, 20, 1 );
-        matrixrgb_set_color( &my_color, 0, 1, 0 );
-        matrixrgb_scroll_text_left( "G", my_color, 20, 1 );
-        matrixrgb_set_color( &my_color, 0, 0, 1 );
-        matrixrgb_scroll_text_left( "B", my_color, 20, 1 );
-    }
-}
-
-void system_setup( char brightness, uint8_t width, uint8_t height )
-{
-    
-    GPIO_Digital_Output( &GPIOD_BASE, _GPIO_PINMASK_13); // Set Chip Select pin as output
-    GPIO_Digital_Output( &GPIOC_BASE, _GPIO_PINMASK_2 ); // Set Reset pin to output
-    GPIO_Digital_Input( &GPIOD_BASE, _GPIO_PINMASK_10);  // Set Ready to input
-
-    // Initialize SPI
-    SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
-                       _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
-                       _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_DISABLE | _SPI_SSI_1,
-                       &_GPIO_MODULE_SPI3_PC10_11_12);
-
-    MATRIXRGB_RST = 0;        //Reset slave ( toggle )
-    MATRIXRGB_RST = 1;
-    Delay_ms(200);
-
-    matrixrgb_init( brightness, width, height );
-    Delay_ms(200);
-
-}*/
-
-
+void write_letter( uint8_t *bmp, uint8_t width, uint16_t current_row, uint16_t current_col );
 
 #ifdef __cplusplus
 } // extern "C"

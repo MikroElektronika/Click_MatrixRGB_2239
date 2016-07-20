@@ -145,7 +145,7 @@ extern "C"{
  */
 void matrixrgb_init( uint8_t width, uint8_t height );
 
-void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint8_t start_row, uint8_t start_col );
+void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint16_t start_row, uint16_t start_col );
 
 /**
  * @brief <h3> MatrixRGB Image Load </h3>
@@ -160,7 +160,7 @@ void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint8_t
  * @param[in] width         -        Width in pixels
  * @param[in] height        -        Height in pixels
  */
-void matrixrgb_image_load( uint8_t *bmp, uint8_t width, uint8_t height );
+void matrixrgb_image_load( uint8_t *bmp, uint16_t width, uint16_t height );
 
 /**
  * @brief <h3> MatrixRGB Scroll Image Left </h3>
@@ -176,7 +176,7 @@ void matrixrgb_image_load( uint8_t *bmp, uint8_t width, uint8_t height );
  * @param[in] height        -        Height in pixels
  * @param[in] speed         -        Speed to scroll, (lower the number, faster the scroll)
  */
-void matrixrgb_scroll_img_left( uint8_t *bmp, uint8_t width, uint8_t height, uint8_t speed );
+void matrixrgb_scroll_img_left( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed );
 
 /**
  * @brief <h3> MatrixRGB Scroll Image Right </h3>
@@ -192,7 +192,7 @@ void matrixrgb_scroll_img_left( uint8_t *bmp, uint8_t width, uint8_t height, uin
  * @param[in] height        -        Height in pixels
  * @param[in] speed         -        Speed to scroll, (lower the number, faster the scroll)
  */
-void matrixrgb_scroll_img_right( uint8_t *bmp, uint8_t width, uint8_t height, uint8_t speed );
+void matrixrgb_scroll_img_right( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed );
 
 /**
  * @brief <h3> MatrixRGB Write Pixel </h3>
@@ -206,7 +206,7 @@ void matrixrgb_scroll_img_right( uint8_t *bmp, uint8_t width, uint8_t height, ui
  * @param[in] green         -        Green pixel ( 0 or 1 )
  * @param[in] blue                -        Blue pixel ( 0 or 1 )
  */
-void matrixrgb_write_pixel( int row, int column, char red, char green, char blue );
+void matrixrgb_write_pixel( uint16_t row, uint16_t column, char red, char green, char blue );
 
 /**
  * @brief <h3> MatrixRGB Write Pixel Image </h3>
@@ -223,7 +223,7 @@ void matrixrgb_write_pixel( int row, int column, char red, char green, char blue
  * @param[in] green         -        Green pixel ( 6 bit resolution but display only uses 1 or 0 )
  * @param[in] blue                -        Blue pixel ( 5 bit resolution but display only uses 1 or 0 )
  */
-void matrixrgb_write_pixel_img( int row, int column, char red, char green, char blue );
+void matrixrgb_write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue );
 
 /**
  * @brief <h3> MatrixRGB Erase Pixel </h3>
@@ -234,7 +234,7 @@ void matrixrgb_write_pixel_img( int row, int column, char red, char green, char 
  * @param[in] row                -   Row of display
  * @param[in] column         -        Column of display
  */
-void matrixrgb_erase_pixel( int row, int column );
+void matrixrgb_erase_pixel( uint16_t row, uint16_t column );
 
 /**
  * @brief <h3> MatrixRGB Scroll Text Right </h3>
