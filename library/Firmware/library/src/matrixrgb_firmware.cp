@@ -1,4 +1,4 @@
-#line 1 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 1 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdbool.h"
 
 
@@ -14,7 +14,7 @@ typedef long ptrdiff_t;
  typedef unsigned long size_t;
 
 typedef unsigned long wchar_t;
-#line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 1 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
 
 
@@ -65,123 +65,129 @@ typedef unsigned long int uintptr_t;
 typedef signed long long intmax_t;
 typedef unsigned long long uintmax_t;
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stddef.h"
-#line 1 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
+#line 1 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/font/fontlibrary.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for ft90x/include/stdint.h"
-#line 11 "c:/users/corey/documents/projects/matrixrgb/firmware/library/font/fontlibrary.h"
+#line 11 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/font/fontlibrary.h"
 extern const uint8_t Dejavu18_Bitmaps[2912];
 extern uint8_t Dejavu18_Widths[91];
-#line 118 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 118 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 typedef struct
 {
  uint8_t red;
  uint8_t green;
  uint8_t blue;
 }color_t;
-#line 147 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+
+typedef enum
+{
+ BIG_PANEL = 0,
+ SMALL_PANEL = 1
+} panel_size_t;
+#line 152 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void refresh( void );
-#line 158 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 163 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void init_parameters( uint8_t width, uint8_t height );
-#line 167 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 172 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void create_frame_buffer( void );
-#line 176 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 181 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void clear_frame_buffer( void );
-#line 189 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 194 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void setup_timer( void );
-#line 202 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
-void system_setup( uint8_t width, uint8_t height );
-#line 212 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 207 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size );
+#line 217 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void set_brightness( char brightness );
-#line 221 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 226 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void inc_row( void );
-#line 230 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 235 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void reset_row( void );
-#line 245 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 250 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void image_load( uint8_t *bmp, uint8_t width, uint8_t height );
-#line 261 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 266 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
-#line 275 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 280 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_onto_right( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
-#line 291 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 296 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_right( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
-#line 305 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 310 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_image_onto_left( uint8_t *bmp, uint8_t width, uint8_t height, uint16_t speed );
-#line 319 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 324 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void write_pixel( uint16_t row, uint16_t column, char red, char green, char blue);
-#line 336 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 341 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue);
-#line 347 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 352 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void erase_pixel( uint16_t row, uint16_t column );
-#line 360 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 365 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void load_text( char *text, uint8_t text_width, uint8_t text_height, color_t color );
-#line 373 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 378 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_text_left( char *text, color_t color, uint16_t speed );
-#line 385 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 390 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void shift_lett_onto_right( uint8_t *text_frame, uint8_t font_width, uint16_t speed );
-#line 398 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 403 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_text_right( char *text, color_t color, uint16_t speed );
-#line 410 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 415 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void shift_lett_onto_left( uint8_t *text_frame, uint8_t font_width, uint16_t speed );
-#line 419 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 424 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_left( void );
-#line 429 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 434 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_off_screen_left( uint16_t speed );
-#line 438 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 443 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_right( void );
-#line 448 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 453 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_off_screen_right( uint16_t speed );
-#line 457 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 462 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_up( void );
-#line 467 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 472 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_off_screen_up( uint16_t speed );
-#line 476 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 481 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_down( void );
-#line 486 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 491 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_off_screen_down( uint16_t speed );
-#line 495 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 500 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void spi_bus_init( void );
-#line 506 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 511 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void receive_data(uint8_t* dataPtr, uint16_t dataSize);
-#line 515 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 520 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void setup_command( void );
-#line 524 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 529 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void image_load_command( void );
-#line 533 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 538 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void my_img_load( void );
-#line 542 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 547 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_img_left_command( void );
-#line 551 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 556 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_img_right_command( void );
-#line 560 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 565 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void write_pxl_command( void );
-#line 569 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 574 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void write_pxl_img_command( void );
-#line 578 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 583 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void erase_pxl_command( void );
-#line 587 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 592 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_text_left_command( void );
-#line 596 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 601 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void scroll_text_right_command( void );
-#line 605 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 610 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_up_command( void );
-#line 614 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 619 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_down_command( void );
-#line 623 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 628 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_right_command( void );
-#line 632 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 637 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_shift_left_command( void );
-#line 641 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 646 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_scroll_off_scrn_up_command( void );
-#line 650 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 655 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_scroll_off_scrn_down_command( void );
-#line 659 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 664 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_scroll_off_scrn_left_command( void );
-#line 668 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 673 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void display_scroll_off_scrn_right_command( void );
-#line 677 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 682 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void refresh_command( void );
-#line 686 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 691 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void clear_screen_command( void );
-#line 698 "c:/users/corey/documents/projects/matrixrgb/firmware/library/include/matrixrgb_firmware.h"
+#line 703 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/firmware/library/include/matrixrgb_firmware.h"
 void allocate_image( uint8_t width, uint8_t height );
 
 void write_text_command( void );
@@ -189,7 +195,7 @@ void write_text_command( void );
 void write_text( uint8_t *text, color_t color, uint16_t start_row, uint16_t start_col );
 
 void write_letter( uint8_t *bmp, uint8_t width, uint16_t current_row, uint16_t current_col );
-#line 50 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 50 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
 typedef enum
 {
  ROW_ONE = 0x0F,
@@ -202,7 +208,7 @@ typedef enum
  ROW_EIGHT = 0x08
 
 } rows_t;
-#line 66 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 67 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
 unsigned char Led_Matrix_Data at GPIO_PORT_08_15;
 sbit Led_Matrix_A at GPIO_PIN32_bit;
 sbit Led_Matrix_B at GPIO_PIN33_bit;
@@ -220,9 +226,11 @@ uint32_t shift_reg;
 uint8_t firm_buffer[65] = { 0 };
 uint16_t p_width;
 uint16_t p_height;
-#line 92 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 88 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
+panel_size_t g_panel_size;
+#line 93 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
 static uint16_t get_coord_index( uint16_t row, uint16_t col );
-#line 97 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 98 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
 static uint16_t get_coord_index( uint16_t row, uint16_t col )
 {
  uint16_t incrementer = 0;
@@ -232,6 +240,8 @@ static uint16_t get_coord_index( uint16_t row, uint16_t col )
  uint16_t mult = 0;
  uint16_t new_col = 0;
 
+ if( g_panel_size == BIG_PANEL )
+ {
 
  if ( row >= 32 )
  {
@@ -254,12 +264,37 @@ static uint16_t get_coord_index( uint16_t row, uint16_t col )
  buffer = incrementer + mult + new + starter + col;
 
  return buffer;
+ }
+ else if( g_panel_size == SMALL_PANEL )
+ {
+ if ( row >= 32 )
+ {
+ new_col = row / 32;
+ new_col *= ( pan_width * 32 );
+ row = row % 32;
+ col += new_col;
+ }
+ if( row == 0 )
+ {
+ starter = 0;
+ incrementer = 0;
+ }
+ else
+ {
+ starter = row % 16;
+ incrementer = ( row / 16 ) * 32;
+ }
+ col+= ( col / 32 ) * 32;
+ buffer = incrementer + ( starter * shift_reg ) + col;
+
+ return buffer;
+ }
 }
 
 void setup_command( void )
 {
- receive_data( &firm_buffer, 2 );
- system_setup( firm_buffer[0], firm_buffer[1] );
+ receive_data( &firm_buffer, 3 );
+ system_setup( firm_buffer[0], firm_buffer[1], firm_buffer[2] );
 }
 
 void write_text_command( void )
@@ -717,14 +752,14 @@ void spi_bus_init()
 
 }
 
-void system_setup( uint8_t width, uint8_t height )
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size )
 {
 
  uint8_t currRow = 0;
 
 
  GPIO_Digital_Output(&GPIO_PORT_08_15, _GPIO_PINMASK_ALL);
-#line 599 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 627 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
  GPIO_Digital_Output(&GPIO_PORT_32_39, _GPIO_PINMASK_0 | _GPIO_PINMASK_1 | _GPIO_PINMASK_2 | _GPIO_PINMASK_3 );
  GPIO_Digital_Output(&GPIO_PORT_40_47, _GPIO_PINMASK_4 | _GPIO_PINMASK_5 );
 
@@ -745,10 +780,15 @@ void system_setup( uint8_t width, uint8_t height )
 
 
 
+ g_panel_size = panel_size;
+
+
  init_parameters( width, height );
 
 
  create_frame_buffer();
+
+
 
 
 
@@ -785,12 +825,23 @@ void set_brightness( char brightness )
 
 void init_parameters( uint8_t width, uint8_t height )
 {
+ if( g_panel_size == BIG_PANEL )
+ {
  pan_width = width;
  pan_height = height;
  p_height = height * 32;
  p_width = width * 32;
  shift_reg = 64 * ( width * height );
+ }
+ else if( g_panel_size == SMALL_PANEL )
+ {
+ pan_width = width;
+ pan_height = height;
+ p_height = height * 16;
+ p_width = width * 32;
+ shift_reg = 32 * ( width * height );
 
+ }
 }
 
 void create_frame_buffer( void )
@@ -842,7 +893,7 @@ void inc_row( void )
  Led_Matrix_B = currRow >> 1;
  Led_Matrix_C = currRow >> 2;
  Led_Matrix_D = currRow >> 3;
-#line 720 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 764 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
  Led_Matrix_OE = 0;
 
 
@@ -857,7 +908,7 @@ void reset_row( void )
  Led_Matrix_B = currRow >> 1;
  Led_Matrix_C = currRow >> 2;
  Led_Matrix_D = currRow >> 3;
-#line 738 "C:/Users/Corey/Documents/Projects/MatrixRGB/Firmware/library/src/matrixrgb_firmware.c"
+#line 782 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Firmware/library/src/matrixrgb_firmware.c"
  Led_Matrix_OE = 0;
 
 

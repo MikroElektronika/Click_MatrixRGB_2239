@@ -27,11 +27,11 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=6
+Count=4
 File0=MatrixRGB_Click_Application.c
 File1=..\Application_Library\src\matrixrgb_hal.c
 File2=..\Application_Library\src\matrixrgb_hw.c
-File5=..\Application_Library\include\matrixrgb_hw.h
+File3=..\Application_Library\include\matrixrgb_hw.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -39,16 +39,16 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=8
-Path0=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
-Path1=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\
+Count=7
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
+Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\
 Path2=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\ARM_Done\
-Path3=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\
-Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\src\
-Path6=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
-Path7=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\
+Path3=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\
+Path4=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\src\
+Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
+Path6=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\
 [HEADER_PATH]
-Count=3
+Count=2
 Path0=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\
 Path1=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
 [HEADERS]

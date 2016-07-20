@@ -120,6 +120,12 @@ typedef struct
     uint8_t blue;                 /**< Blue Color ( 0 or 1 ) */
 }color_t;
 
+typedef enum 
+{
+    BIG_PANEL   = 0,
+    SMALL_PANEL = 1
+} panel_size_t;
+
 /******************************************************************************
 * Variables
 *******************************************************************************/
@@ -143,7 +149,7 @@ extern "C"{
  * @param[in] width         -        Width in panels
  * @param[in] height        -        Height in panels
  */
-void matrixrgb_init( uint8_t width, uint8_t height );
+void matrixrgb_init( uint8_t width, uint8_t height, panel_size_t panel_size );
 
 void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint16_t start_row, uint16_t start_col );
 

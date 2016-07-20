@@ -122,6 +122,11 @@ typedef struct
     uint8_t blue;
 }color_t;
 
+typedef enum
+{
+    BIG_PANEL   = 0,
+    SMALL_PANEL = 1
+} panel_size_t;
 
 /******************************************************************************
 * Variables
@@ -199,7 +204,7 @@ void setup_timer( void );
  * @param[in] width     -   Width in panels
  * @param[in] height    -   Height in panels
  */
-void system_setup( uint8_t width, uint8_t height );
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size );
 
 /**
  * @brief <h3> Set Brightness </h3>

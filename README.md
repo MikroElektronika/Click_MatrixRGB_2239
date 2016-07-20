@@ -13,7 +13,7 @@
 
 ### General Description
 
-Matrix RGB click is a mikroBUS add-on board powered by a 32-bit FT900 MCU designed specifically for powering 16x32 RGB LED matrices. The board has a 16 wire IDC connector for connecting to a single 16x32 LED panel. However, the firmware inside the FT900x chip can drive more than one panel. Multiple panels can be connected to each other into a daisy-chain configuration (see the video). Matrix RGB click communicates with the target MCU through the SPI interface. It uses a 3.3V power supply only.
+Matrix RGB click is a mikroBUS add-on board powered by a 32-bit FT900 MCU designed specifically for powering 16x32 or 32x32 RGB LED matrices. The board has a 16 wire IDC connector for connecting to a single 16x32 or 32x32 LED panel. However, the firmware inside the FT900x chip can drive more than one panel. Multiple panels can be connected to each other into a daisy-chain configuration (see the video). Matrix RGB click communicates with the target MCU through the SPI interface. The click uses a 3.3V power supply only.
 
 
 ---
@@ -39,15 +39,13 @@ sbit MATRIXRGB_CS       at GPIOD_ODR.B13;
 sbit MATRIXRGB_READY    at GPIOD_IDR.B10;
 sbit MATRIXRGB_RST      at GPIOC_ODR.B2;
 
-void system_setup( uint8_t width, uint8_t height );
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size );
 
 void main()
 {
-    uint16_t count = 0;
-    uint8_t i     = 0;
     color_t my_color;
 
-    system_setup( 2, 2 );
+    system_setup( 1, 1, BIG_PANEL );
 
     matrixrgb_scroll_img_left( MikroE_Sign_bmp, 32, 32, 25 );
     matrixrgb_scroll_off_scrn_down( 25 );
@@ -73,13 +71,6 @@ void main()
 
     while(1)
     {
-      /* matrixrgb_refresh();
-       count++;
-       if( count >= 200 )
-       {
-           count = 0;
-           matrixrgb_shift_down();
-       }  */
         matrixrgb_set_color( &my_color, 1, 1, 1 );
         matrixrgb_scroll_text_left( "Matrix", my_color, 10, 10 );
         matrixrgb_set_color( &my_color, 1, 0, 0 );
@@ -91,7 +82,7 @@ void main()
     }
 }
 
-void system_setup( uint8_t width, uint8_t height )
+void system_setup( uint8_t width, uint8_t height, panel_size )
 {
     
     GPIO_Digital_Output( &GPIOD_BASE, _GPIO_PINMASK_13); // Set Chip Select pin as output
@@ -109,7 +100,7 @@ void system_setup( uint8_t width, uint8_t height )
     MATRIXRGB_RST = 1;
     Delay_ms(200);
 
-    matrixrgb_init( width, height );
+    matrixrgb_init( width, height, panel_size );
     Delay_ms(200);
 
 }

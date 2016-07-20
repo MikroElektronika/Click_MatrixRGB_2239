@@ -1,24 +1,27 @@
 #include "matrixrgb_hw.h"
 #include "resources.h"
+#include <stdint.h>
 
-sbit MATRIXRGB_CS       at GPIOD_ODR.B13;
-sbit MATRIXRGB_READY    at GPIOD_IDR.B10;
-sbit MATRIXRGB_RST      at GPIOC_ODR.B2;
+sbit MATRIXRGB_CS         at RC2_bit;
+sbit MATRIXRGB_CS_DIR     at TRISC2_bit;
+sbit MATRIXRGB_READY      at RE8_bit;
+sbit MATRIXRGB_READY_DIR  at TRISE8_bit;
+sbit MATRIXRGB_RST        at RC1_bit;
+sbit MATRIXRGB_RST_DIR    at TRISC1_bit;
 
 void system_setup( uint8_t width, uint8_t height );
 
 void main()
 {
-    uint16_t count = 0;
-    uint8_t i     = 0;
     color_t my_color;
+    uint8_t count = 3;
+    uint8_t i     = 0;
+    system_setup( 2, 1 );
 
-    system_setup( 2, 2 );
-
-    matrixrgb_scroll_img_left( MikroE_Sign_bmp, 32, 32, 25 );
-    matrixrgb_scroll_off_scrn_down( 25 );
+    matrixrgb_scroll_img_right( MikroeBITMAP_bmp, 64, 16, 40 );
+    matrixrgb_scroll_off_scrn_down( 30 );
     matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_text_right( "Matrix ", my_color, 17, 10 );
+    matrixrgb_scroll_text_left( "Matrix ", my_color, 17, 10 );
     matrixrgb_set_color( &my_color, 1, 0, 0 );
     matrixrgb_scroll_text_left( "R", my_color, 17, 1 );
     matrixrgb_set_color( &my_color, 0, 1, 0 );
@@ -39,39 +42,30 @@ void main()
 
     while(1)
     {
-      /* matrixrgb_refresh();
-       count++;
-       if( count >= 200 )
-       {
-           count = 0;
-           matrixrgb_shift_down();
-       }  */
         matrixrgb_set_color( &my_color, 1, 1, 1 );
-        matrixrgb_scroll_text_left( "Matrix", my_color, 10, 10 );
+        matrixrgb_scroll_text_left( "Matrix", my_color, 20, 10 );
         matrixrgb_set_color( &my_color, 1, 0, 0 );
-        matrixrgb_scroll_text_left( "R", my_color, 10, 1 );
+        matrixrgb_scroll_text_left( "R", my_color, 20, 1 );
         matrixrgb_set_color( &my_color, 0, 1, 0 );
-        matrixrgb_scroll_text_left( "G", my_color, 10, 1 );
+        matrixrgb_scroll_text_left( "G", my_color, 20, 1 );
         matrixrgb_set_color( &my_color, 0, 0, 1 );
-        matrixrgb_scroll_text_left( "B", my_color, 10, 1 );
+        matrixrgb_scroll_text_left( "B", my_color, 20, 1 );
+        matrixrgb_refresh();
     }
 }
 
 void system_setup( uint8_t width, uint8_t height )
 {
-    
-    GPIO_Digital_Output( &GPIOD_BASE, _GPIO_PINMASK_13); // Set Chip Select pin as output
-    GPIO_Digital_Output( &GPIOC_BASE, _GPIO_PINMASK_2 ); // Set Reset pin to output
-    GPIO_Digital_Input( &GPIOD_BASE, _GPIO_PINMASK_10);  // Set Ready to input
+    MATRIXRGB_CS_DIR = 0;
+    MATRIXRGB_READY_DIR = 1;
+    MATRIXRGB_RST_DIR = 0;
 
-    // Initialize SPI
-    SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
-                       _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
-                       _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_DISABLE | _SPI_SSI_1,
-                       &_GPIO_MODULE_SPI3_PC10_11_12);
+    // SPI
+    SPI3_Init_Advanced( _SPI_MASTER, _SPI_8_BIT, 2, _SPI_SS_DISABLE,
+                    _SPI_DATA_SAMPLE_END, _SPI_CLK_IDLE_LOW,
+                    _SPI_IDLE_2_ACTIVE );
 
     MATRIXRGB_RST = 0;        //Reset slave ( toggle )
-    Delay_ms(20);
     MATRIXRGB_RST = 1;
     Delay_ms(200);
 

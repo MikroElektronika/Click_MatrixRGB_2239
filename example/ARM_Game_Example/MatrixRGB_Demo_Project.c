@@ -4,14 +4,14 @@
 
 #define AUTOPLAY      /**< For debugging purposes */
 #define BONUSLEVEL    /**< For Bonus Level after completing HARD mode */
-#define CHEATING      /**< While paused btn held, can move the paddle */
+//#define CHEATING      /**< While paused btn held, can move the paddle */
 //#define TIME_DISPLAY  /**< Used to display time since start of game */
 
 sbit MATRIXRGB_CS       at GPIOD_ODR.B13;
 sbit MATRIXRGB_READY    at GPIOD_IDR.B10;
 sbit MATRIXRGB_RST      at GPIOC_ODR.B2;
 
-void system_setup( char brightness, uint8_t width, uint8_t height );    /**<    Sets up GPIO / SPI / MatrixRGB */
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size );    /**<    Sets up GPIO / SPI / MatrixRGB */
 void InitTimer2( void );                        /**<    Timer2 Initialization */
 void setup_gameboard( void );                   /**<    Sets up normal level  */
 void setup_player( void );                      /**<    Sets up player on bottom of screen */
@@ -89,7 +89,7 @@ vert_direction_t  ball_dir_vert  = UP;       /**<   Global Vertical Ball Directi
 horiz_direction_t ball_dir_horiz = LEFT;     /**<   Global Horizontal Ball Direction    */
 position_t   ball_curr_pos;                  /**<   Global Current Ball Position    */
 position_t player_curr_pos;                  /**<   Global Current Player Position  */
-uint8_t move_flag = 0;                       /**<   Flag for when to refresh movement of character ( flag set every 200 us )        */
+uint8_t move_flag        = 0;                /**<   Flag for when to refresh movement of character ( flag set every 200 us )        */
 uint16_t ball_count_flag = 0;                /**<   Flag for when to move the Ball, ( depends on g_ball_speed )     */
 unsigned long adc_pos;                       /**<   Global ADC Position value    */
 bool safe = true;                            /**<   Global "Safe" flag for when player loses    */
@@ -100,10 +100,10 @@ player_surface_t player_surface;             /**<   Global indication of what si
 uint16_t g_ball_speed = 50;                  /**<   Smaller # = faster speed   */
 uint16_t ball_speed;                         /**<   Used for when vector is increased, to slow down ball (normalization) */
 bool playing = true;                         /**<   Used to check if win   */
-uint16_t rand_num = 0;                       /**<   Used for Random Number Generation */
-uint32_t time = 0;
-uint8_t time_s = 0;
-uint8_t offset = 32;                                             /**< Used when shifting display for game around to other screens */
+uint16_t rand_num  = 0;                      /**<   Used for Random Number Generation */
+uint32_t time      = 0;
+uint8_t time_s     = 0;
+uint8_t offset     = 0;                      /**< Used when shifting display for game around to other screens */
 
 
 void main()
@@ -111,10 +111,9 @@ void main()
     color_t my_color;               /**<    Color for Text */
     uint8_t bonus_level = 0;        /**<    Flag used for Bonus Level after winning on Hard */
 
-
     /**< System Setup */
     matrixrgb_set_color( &my_color, 1, 0, 0 );      /**<    Color for text */
-    system_setup( 100, 2, 2);                       /**<    Sets up ADC, SPI, MatrixRGB, Timer */
+    system_setup( 1, 1, BIG_PANEL );                            /**<    Sets up ADC, SPI, MatrixRGB, Timer */
     /**< Game Setup */
     ball_speed = g_ball_speed;                      /**<    Setup initial ball speed */
     wait_for_choice();                              /**<    Wait for choice from Main Menu */
@@ -424,7 +423,7 @@ void set_vector( uint8_t *amount )
 
 void erase_brick( uint8_t number )
 {
-    uint8_t i;
+    uint16_t i;
 
     for ( i = 0; i < 4; i++ )                 /**< Erases block with index "number" */
     {
@@ -831,7 +830,7 @@ void setup_player( void )
     player_surface = MIDDLE_SURFACE;    /**< Start with default vector */
 }
 
-void system_setup( char brightness, uint8_t width, uint8_t height )
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size )
 {
 
     GPIO_Digital_Output( &GPIOD_BASE, _GPIO_PINMASK_13); /**< Set Chip Select pin as output */
@@ -852,7 +851,7 @@ void system_setup( char brightness, uint8_t width, uint8_t height )
     MATRIXRGB_RST = 1;
     Delay_ms(200);
 
-    matrixrgb_init( brightness, width, height );         /**< Initialize MatrixRGB Click, with brightness of 100, and width of 1 panel by height of 2 panels */
+    matrixrgb_init( width, height, panel_size );         /**< Initialize MatrixRGB Click, with brightness of 100, and width of 1 panel by height of 2 panels */
     Delay_ms(200);
 
     InitTimer2();                                        /**< Initialize Timer 2 at 10 us */

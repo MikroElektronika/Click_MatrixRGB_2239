@@ -72,16 +72,19 @@ static uint8_t spi_buffer[100] = { 0 };
 /******************************************************************************
 * Public Function Definitions
 *******************************************************************************/
-void matrixrgb_init( uint8_t width, uint8_t height )
+void matrixrgb_init( uint8_t width, uint8_t height, panel_size_t panel_size )
 {
     matrixrgb_hal_init();
     Delay_ms(300);
 
+    if( panel_size != BIG_PANEL && panel_size != SMALL_PANEL )
+        return;
     spi_buffer[0] = SETUP_CMD;
     matrixrgb_hal_write( &spi_buffer, 1 );
     spi_buffer[0] = width;
     spi_buffer[1] = height;
-    matrixrgb_hal_write( &spi_buffer, 2 );
+    spi_buffer[2] = panel_size;
+    matrixrgb_hal_write( &spi_buffer, 3 );
 
 }
 

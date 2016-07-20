@@ -1,5 +1,5 @@
-#line 1 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
-#line 1 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 1 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
+#line 1 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/stdint.h"
 
 
@@ -64,25 +64,25 @@ typedef long ptrdiff_t;
  typedef unsigned long size_t;
 
 typedef unsigned long wchar_t;
-#line 64 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 64 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_cs_high( void );
-#line 72 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 72 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_cs_low( void );
-#line 87 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 87 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_init( void );
-#line 101 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 101 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_write( uint8_t *buffer,
  uint16_t count );
-#line 116 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 116 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_read( uint8_t *buffer,
  uint16_t count );
-#line 39 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
+#line 39 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
 static void ( *write_spi_p ) ( unsigned int data_out );
 static unsigned int ( *read_spi_p ) ( unsigned int buffer );
-#line 68 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
+#line 68 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
 extern sfr sbit MATRIXRGB_CS;
 extern sfr sbit MATRIXRGB_READY;
-#line 80 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
+#line 80 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
 void matrixrgb_hal_cs_high()
 {
  MATRIXRGB_CS = 1;
@@ -95,10 +95,10 @@ void matrixrgb_hal_cs_low()
 
 void matrixrgb_hal_init()
 {
-#line 97 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
+#line 97 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
  write_spi_p = SPI_Wr_Ptr;
  read_spi_p = SPI_Rd_Ptr;
-#line 111 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hal.c"
+#line 111 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hal.c"
  matrixrgb_hal_cs_high();
 
 }

@@ -59,6 +59,7 @@ typedef enum
     ROW_EIGHT = 0x08
 
 } rows_t;
+
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
@@ -80,7 +81,7 @@ uint32_t shift_reg;                 /**< Shift reg size ( ( width * height ) * 3
 uint8_t firm_buffer[65]  = { 0 };   /**< Buffer for SPI Slave FIFO.. 64 bytes long  */
 uint16_t p_width;
 uint16_t p_height;                  /**< Width and Height in pixels */
-
+panel_size_t g_panel_size;            /**< For user to choose between 32x32 and 16x32 panels
 
 /******************************************************************************
 * Function Prototypes
@@ -103,34 +104,61 @@ static uint16_t get_coord_index( uint16_t row, uint16_t col )
     uint16_t mult        = 0;
     uint16_t new_col     = 0;
 
-    //Check for boundaries
-    if ( row >= 32 )
+    if( g_panel_size == BIG_PANEL )
     {
-        new_col = row / 32;
-        new_col *= ( pan_width * 32 );
-        row = row % 32;
-        col += new_col;
-    }
-    incrementer = ( row / 8 );
-    if ( ( ( incrementer % 2 ) == 0 ) || incrementer == 0 )
-        incrementer = 32;
-    else
-        incrementer = 0;
-    starter = ( col / 32 ) * 32;
-    if ( row < 16 )
-        new = 0;
-    else
-        new = shift_reg * 8;
-    mult = ( row % 8 ) * shift_reg;
-    buffer = incrementer + mult + new + starter + col;
+        //Check for boundaries
+        if ( row >= 32 )
+        {
+            new_col = row / 32;
+            new_col *= ( pan_width * 32 );
+            row = row % 32;
+            col += new_col;
+        }
+        incrementer = ( row / 8 );
+        if ( ( ( incrementer % 2 ) == 0 ) || incrementer == 0 )
+            incrementer = 32;
+        else
+            incrementer = 0;
+        starter = ( col / 32 ) * 32;
+        if ( row < 16 )
+            new = 0;
+        else
+            new = shift_reg * 8;
+        mult = ( row % 8 ) * shift_reg;
+        buffer = incrementer + mult + new + starter + col;
 
-    return buffer;
+        return buffer;
+    }
+    else if( g_panel_size == SMALL_PANEL )
+    {            
+        if ( row >= 32 )
+        {
+            new_col = row / 32;
+            new_col *= ( pan_width * 32 );
+            row = row % 32;
+            col += new_col;
+        }
+         if( row == 0 )
+         {
+             starter = 0;
+             incrementer = 0;
+         }
+         else
+         {
+             starter = row % 16;
+             incrementer = ( row / 16 ) * 32;
+         }
+        col+= ( col / 32 ) * 32;
+        buffer = incrementer + ( starter *  shift_reg ) + col;
+        
+        return buffer;
+    }
 }
 
 void setup_command( void )
 {
-    receive_data( &firm_buffer, 2 );
-    system_setup( firm_buffer[0], firm_buffer[1] );
+    receive_data( &firm_buffer, 3 );
+    system_setup( firm_buffer[0], firm_buffer[1], firm_buffer[2] );
 }
 
 void write_text_command( void )
@@ -588,7 +616,7 @@ void spi_bus_init()
 
 }
 
-void system_setup( uint8_t width, uint8_t height )
+void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size )
 {
     // Local Declarations
     uint8_t currRow = 0;
@@ -603,18 +631,21 @@ void system_setup( uint8_t width, uint8_t height )
 
     //LED Pins
     Led_Matrix_Data = 0; asm nop;
-    Led_Matrix_A = 0; asm nop;
-    Led_Matrix_B = 0; asm nop;
-    Led_Matrix_C = 0; asm nop;
-    Led_Matrix_D = 0; asm nop;
-    Led_Matrix_CLK = 0; asm nop;
-    Led_Matrix_STB = 1; asm nop;
-    Led_Matrix_OE  = 1; asm nop;
+    Led_Matrix_A    = 0; asm nop;
+    Led_Matrix_B    = 0; asm nop;
+    Led_Matrix_C    = 0; asm nop;
+    Led_Matrix_D    = 0; asm nop;
+    Led_Matrix_CLK  = 0; asm nop;
+    Led_Matrix_STB  = 1; asm nop;
+    Led_Matrix_OE   = 1; asm nop;
     Delay_ms(100);
 
     //PWM
     //set_brightness( 10 );
-
+    
+    //Set panel size.. Big or Small
+    g_panel_size = panel_size;
+    
     //Size Parameters
     init_parameters( width, height );
 
@@ -623,6 +654,8 @@ void system_setup( uint8_t width, uint8_t height )
 
     //Timer Initialization
     //setup_timer();
+
+
 
 }
 
@@ -656,12 +689,23 @@ void set_brightness( char brightness )
 
 void init_parameters( uint8_t width, uint8_t height )
 {
-    pan_width  = width;
-    pan_height = height;
-    p_height = height * 32;
-    p_width  = width * 32;
-    shift_reg = 64 * ( width * height );
-
+    if( g_panel_size == BIG_PANEL )
+    {
+        pan_width  = width;
+        pan_height = height;
+        p_height = height * 32;
+        p_width  = width * 32;
+        shift_reg = 64 * ( width * height );
+    }
+    else if( g_panel_size == SMALL_PANEL )
+    {
+        pan_width  = width;
+        pan_height = height;
+        p_height = height * 16;
+        p_width  = width * 32;
+        shift_reg = 32 * ( width * height );
+    
+    }
 }
 
 void create_frame_buffer( void )

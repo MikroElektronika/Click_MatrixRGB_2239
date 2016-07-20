@@ -18,9 +18,9 @@ Value=
 [FILES]
 Count=4
 File0=MatrixRGB_Demo_Project.c
-File1=..\Application_Library\src\matrixrgb_hal.c
-File2=..\Application_Library\src\matrixrgb_hw.c
-File3=..\Application_Library\resources\resources.c
+File1=..\Application_Library\resources\resources.c
+File2=..\..\Firmware_Merge_Attempt\libraries\Application_Library\src\matrixrgb_hal.c
+File3=..\..\Firmware_Merge_Attempt\libraries\Application_Library\src\matrixrgb_hw.c
 [BINARIES]
 Count=0
 [IMAGES]
@@ -29,12 +29,12 @@ ActiveImageIndex=-1
 [OPENED_FILES]
 Count=7
 File0=MatrixRGB_Demo_Project.c
-File1=..\Application_Library\src\matrixrgb_hal.c
-File2=..\Application_Library\src\matrixrgb_hw.c
-File3=..\Application_Library\resources\resources.c
-File4=..\Application_Library\include\matrixrgb_hal.h
-File5=..\Application_Library\include\matrixrgb_hw.h
-File6=..\Application_Library\resources\resources.h
+File1=..\Application_Library\resources\resources.c
+File2=..\Application_Library\resources\resources.h
+File3=..\..\Firmware_Merge_Attempt\libraries\Application_Library\src\matrixrgb_hal.c
+File4=..\..\Firmware_Merge_Attempt\libraries\Application_Library\src\matrixrgb_hw.c
+File5=..\..\Firmware_Merge_Attempt\libraries\Application_Library\include\matrixrgb_hal.h
+File6=..\..\Firmware_Merge_Attempt\libraries\Application_Library\include\matrixrgb_hw.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -42,23 +42,26 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=7
-Path0=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
-Path1=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\
+Count=10
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
+Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\
 Path2=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Demo_Project\
-Path3=C:\Users\Corey\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\
-Path4=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\src\
-Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
-Path6=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\
+Path3=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
+Path4=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\resources\
+Path5=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\src\
+Path6=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\src\
+Path7=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\src\
+Path8=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\src\
+Path9=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\src\
 [HEADER_PATH]
 Count=2
-Path0=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\include\
-Path1=C:\Users\Corey\Documents\Projects\MatrixRGB\Application\Application_Library\resources\
+Path0=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\include\
+Path1=C:\Users\Corey\Documents\Projects\MatrixRGB\Firmware_Merge_Attempt\libraries\Application_Library\resources\
 [HEADERS]
 Count=3
-File0=..\Application_Library\include\matrixrgb_hal.h
-File1=..\Application_Library\include\matrixrgb_hw.h
-File2=..\Application_Library\resources\resources.h
+File0=..\Application_Library\resources\resources.h
+File1=..\..\Firmware_Merge_Attempt\libraries\Application_Library\include\matrixrgb_hal.h
+File2=..\..\Firmware_Merge_Attempt\libraries\Application_Library\include\matrixrgb_hw.h
 [PLDS]
 Count=0
 [Useses]

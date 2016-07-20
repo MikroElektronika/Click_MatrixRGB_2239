@@ -1,5 +1,5 @@
-#line 1 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
-#line 1 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 1 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
+#line 1 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/stdint.h"
 
 
@@ -49,56 +49,62 @@ typedef unsigned long int uintptr_t;
 
 typedef signed long long intmax_t;
 typedef unsigned long long uintmax_t;
-#line 116 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 116 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 typedef struct
 {
  uint8_t red;
  uint8_t green;
  uint8_t blue;
 }color_t;
-#line 146 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
-void matrixrgb_init( uint8_t width, uint8_t height );
+
+typedef enum
+{
+ BIG_PANEL = 0,
+ SMALL_PANEL = 1
+} panel_size_t;
+#line 152 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
+void matrixrgb_init( uint8_t width, uint8_t height, panel_size_t panel_size );
 
 void matrixrgb_write_text( char *text, color_t color, uint8_t text_size, uint16_t start_row, uint16_t start_col );
-#line 163 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 169 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_image_load( uint8_t *bmp, uint16_t width, uint16_t height );
-#line 179 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 185 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_img_left( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed );
-#line 195 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 201 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_img_right( uint8_t *bmp, uint16_t width, uint16_t height, uint8_t speed );
-#line 209 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 215 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_write_pixel( uint16_t row, uint16_t column, char red, char green, char blue );
-#line 226 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 232 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_write_pixel_img( uint16_t row, uint16_t column, char red, char green, char blue );
-#line 237 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 243 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_erase_pixel( uint16_t row, uint16_t column );
-#line 250 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 256 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_text_right( char *text, color_t color, uint8_t speed , uint8_t text_size );
-#line 263 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 269 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_text_left( char *text, color_t color, uint8_t speed , uint8_t text_size );
-#line 272 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 278 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_shift_up( void );
-#line 281 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 287 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_shift_down( void );
-#line 290 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 296 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_shift_right( void );
-#line 299 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 305 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_shift_left( void );
-#line 309 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 315 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_off_scrn_up( uint8_t speed );
-#line 319 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 325 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_off_scrn_down( uint8_t speed );
-#line 329 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 335 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_off_scrn_left( uint8_t speed );
-#line 339 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 345 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_scroll_off_scrn_right( uint8_t speed );
-#line 353 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 359 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_refresh( void );
-#line 362 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 368 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_clear_screen( void );
-#line 374 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hw.h"
+#line 380 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hw.h"
 void matrixrgb_set_color( color_t *color, uint8_t red_color, uint8_t green_color, uint8_t blue_color );
-#line 1 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 1 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/stdint.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for arm/include/stdbool.h"
 
@@ -115,19 +121,19 @@ typedef long ptrdiff_t;
  typedef unsigned long size_t;
 
 typedef unsigned long wchar_t;
-#line 64 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 64 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_cs_high( void );
-#line 72 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 72 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_cs_low( void );
-#line 87 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 87 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_init( void );
-#line 101 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 101 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_write( uint8_t *buffer,
  uint16_t count );
-#line 116 "c:/users/corey/documents/projects/matrixrgb/application/application_library/include/matrixrgb_hal.h"
+#line 116 "//vboxsvr/corey/projects/clicklibraries/matrixrgb_click/library/application/application_library/include/matrixrgb_hal.h"
 void matrixrgb_hal_read( uint8_t *buffer,
  uint16_t count );
-#line 35 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
+#line 35 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
 enum
 {
  SETUP_CMD = 0x01,
@@ -152,19 +158,22 @@ enum
  WRITE_TEXT_CMD = 0x14
 
 }master_cmd_t;
-#line 62 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
+#line 62 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
 static uint8_t spi_buffer[100] = { 0 };
-#line 75 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
-void matrixrgb_init( uint8_t width, uint8_t height )
+#line 75 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
+void matrixrgb_init( uint8_t width, uint8_t height, panel_size_t panel_size )
 {
  matrixrgb_hal_init();
  Delay_ms(300);
 
+ if( panel_size != BIG_PANEL && panel_size != SMALL_PANEL )
+ return;
  spi_buffer[0] = SETUP_CMD;
  matrixrgb_hal_write( &spi_buffer, 1 );
  spi_buffer[0] = width;
  spi_buffer[1] = height;
- matrixrgb_hal_write( &spi_buffer, 2 );
+ spi_buffer[2] = panel_size;
+ matrixrgb_hal_write( &spi_buffer, 3 );
 
 }
 
@@ -220,7 +229,7 @@ void matrixrgb_image_load( uint8_t *bmp, uint16_t width, uint16_t height )
  spi_buffer[2] = h_lo;
  spi_buffer[3] = h_hi;
  matrixrgb_hal_write( &spi_buffer, 4 );
-#line 144 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
+#line 147 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
  for( i = 0; i < height; i++ )
  for( j = 0; j < width; j++ )
  {
@@ -249,7 +258,7 @@ void matrixrgb_scroll_img_left( uint8_t *bmp, uint16_t width, uint16_t height, u
  spi_buffer[2] = h_lo;
  spi_buffer[3] = h_hi;
  matrixrgb_hal_write( &spi_buffer, 4 );
-#line 175 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
+#line 178 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
  spi_buffer[0] = speed;
  matrixrgb_hal_write( &spi_buffer, 1 );
 
@@ -281,7 +290,7 @@ void matrixrgb_scroll_img_right( uint8_t *bmp, uint16_t width, uint16_t height, 
  spi_buffer[2] = h_lo;
  spi_buffer[3] = h_hi;
  matrixrgb_hal_write( &spi_buffer, 4 );
-#line 209 "C:/Users/Corey/Documents/Projects/MatrixRGB/Application/Application_Library/src/matrixrgb_hw.c"
+#line 212 "//VBOXSVR/corey/Projects/ClickLibraries/MatrixRGB_Click/library/Application/Application_Library/src/matrixrgb_hw.c"
  spi_buffer[0] = speed;
  matrixrgb_hal_write( &spi_buffer, 1 );
 
