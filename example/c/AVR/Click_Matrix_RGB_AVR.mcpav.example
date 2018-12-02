@@ -1,0 +1,26 @@
+[DEVICE]
+Name=ATMEGA32
+Clock=8000000
+[BUILD_TYPE]
+Value=0
+[FILES]
+Count=1
+File0=Click_Matrix_RGB_AVR.c
+[HEADERS]
+Count=4
+File0=Click_Matrix_RGB_config.h
+File1=Click_Matrix_RGB_types.h
+File2=fonts.h
+File3=images.h
+[PLDS]
+Count=1
+File0=Click_Matrix_RGB.pld
+[Useses]
+File0=UART
+File1=Conversions
+File2=C_String
+File3=Matrix_RGB_AVR_LT
+File4=easyavr_v7_ATMEGA32
+File5= SPI
+File6=//TWI
+Count=7

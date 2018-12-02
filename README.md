@@ -1,109 +1,128 @@
 ![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
 
-![Matrix RGB Click](http://cdn.mikroe.com/img/click/matrix-rgb/preview/matrix-rgb-click-thumb-02.png)
-
----
-[Product Page](http://www.mikroe.com/click/matrix-rgb/)
-
-[Manual Page](http://docs.mikroe.com/Matrixrgb)
-
-[Learn Page](http://learn.mikroe.com/matrix-rgb-panels/)
-
 ---
 
-### General Description
+# Matrix RGB Click
 
-Matrix RGB click is a mikroBUS add-on board powered by a 32-bit FT900 MCU designed specifically for powering 16x32 or 32x32 RGB LED matrices. The board has a 16 wire IDC connector for connecting to a single 16x32 or 32x32 LED panel. However, the firmware inside the FT900x chip can drive more than one panel. Multiple panels can be connected to each other into a daisy-chain configuration (see the video). Matrix RGB click communicates with the target MCU through the SPI interface. The click uses a 3.3V power supply only.
-
+- **CIC Prefix**  : MATRIXRGB
+- **Author**      : Milos Vidojevic
+- **Verison**     : 2.0.0
+- **Date**        : Jul 2018.
 
 ---
 
-### Example
+### Software Support
 
-#### Configuration
-* MCU:             STM32F107VC
-* Dev.Board:       EasyMx Pro v7
-* Oscillator:      72 Mhz internal
-* Ext. Modules:    Matrix RGB click
-* SW:              MikroC PRO for ARM 4.7.4
+We provide a library for the Matrix RGB Click on our [LibStock](https://libstock.mikroe.com/projects/view/1840/matrix-rgb-click) 
+page, as well as a demo application (example), developed using MikroElektronika 
+[compilers](http://shop.mikroe.com/compilers). The demo can run on all the main 
+MikroElektronika [development boards](http://shop.mikroe.com/development-boards).
 
-```
-#include <stdint.h>
+**Library Description**
 
-/*      Functions
- ****************************/
-#include "matrixrgb_hw.h"
-#include "resources.h"
+Library covers 8 different patterns, from single to 4 panels positioned as square. 
+You can draw images, write text change brightness and write single pixels on the panel.
 
-sbit MATRIXRGB_CS       at GPIOD_ODR.B13;
-sbit MATRIXRGB_READY    at GPIOD_IDR.B10;
-sbit MATRIXRGB_RST      at GPIOC_ODR.B2;
+Key functions :
 
-void system_setup( uint8_t width, uint8_t height, panel_size_t panel_size );
+- ``` void matrixrgb_fillScreen( uint16_t color ) ``` - Fill screen with provided color
+- ``` void matrixrgb_drawImage( const uint8_t *img ) ``` - Draw image on screen
+- ``` void matrixrgb_writeText( char* text, uint8_t x, uint8_t y ) ``` - Write text on display
 
-void main()
+**Examples Description**
+
+Description :
+
+The application is composed of three sections :
+
+- System Initialization : Initializes GPIO pins and SPI bus used for
+         communcation with the click board
+- Application Initialization : Initializes driver, reset device and initializes
+         firmware depend on pattern used alongside with fonts
+- Application Task (code snippet) : Test of panel brightnes, draws red cross on
+         the panel using pixel write function and finaly displays image on the panel.
+
+Notes :
+
+Use mikroE GLCD Font Creator to create font definition table.
+
+```.c
+
+void applicationTask()
 {
-    color_t my_color;
+    uint16_t test;
 
-    system_setup( 1, 1, BIG_PANEL );
-
-    matrixrgb_scroll_img_left( MikroE_Sign_bmp, 32, 32, 25 );
-    matrixrgb_scroll_off_scrn_down( 25 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_text_right( "Matrix ", my_color, 17, 10 );
-    matrixrgb_set_color( &my_color, 1, 0, 0 );
-    matrixrgb_scroll_text_left( "R", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 0, 1, 0 );
-    matrixrgb_scroll_text_left( "G", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 0, 0, 1 );
-    matrixrgb_scroll_text_left( "B ", my_color, 17, 1 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_off_scrn_up( 30 );
-    matrixrgb_set_color( &my_color, 1, 0, 0 );
-    matrixrgb_scroll_text_left( "By: ", my_color, 17, 4 );
-    matrixrgb_set_color( &my_color, 1, 1, 1 );
-    matrixrgb_scroll_text_left( "Corey ", my_color, 17, 6 );
-    matrixrgb_set_color( &my_color, 0, 0, 1 );
-    matrixrgb_scroll_text_left( "Lakey ", my_color, 17, 6 );
-    matrixrgb_scroll_off_scrn_left( 17 );
-    matrixrgb_scroll_img_right( MikroeBITMAP_bmp, 64, 16, 25 );
-    matrixrgb_scroll_off_scrn_right( 10 );
-
-    while(1)
+    // Brightness Test
+    for (test = 5; test < 50; test++)
     {
-        matrixrgb_set_color( &my_color, 1, 1, 1 );
-        matrixrgb_scroll_text_left( "Matrix", my_color, 10, 10 );
-        matrixrgb_set_color( &my_color, 1, 0, 0 );
-        matrixrgb_scroll_text_left( "R", my_color, 10, 1 );
-        matrixrgb_set_color( &my_color, 0, 1, 0 );
-        matrixrgb_scroll_text_left( "G", my_color, 10, 1 );
-        matrixrgb_set_color( &my_color, 0, 0, 1 );
-        matrixrgb_scroll_text_left( "B", my_color, 10, 1 );
+        matrixrgb_setBrightness( test );
+        Delay_ms( 50 );
     }
+
+    for (test = 50; test > 5; test--)
+    {
+        matrixrgb_setBrightness( test );
+        Delay_ms( 50 );
+    }
+
+    // Pixel Write Test
+    matrixrgb_fillScreen( 0x0000 );
+    for (test = 0; test < 32; test++)
+    {
+        matrixrgb_writePixel( test, test, 0xF100 );
+        Delay_ms( 100 );
+    }
+    for (test = 32; test > 0; test--)
+    {
+        matrixrgb_writePixel( 31 - test, test, 0xF100 );
+        Delay_ms( 100 );
+    }
+
+    // Image Test
+    matrixrgb_drawImage( &mikroe_logo_32x32_bmp[0] );
+    Delay_ms( 1000 );
 }
 
-void system_setup( uint8_t width, uint8_t height, panel_size )
-{
-    
-    GPIO_Digital_Output( &GPIOD_BASE, _GPIO_PINMASK_13); // Set Chip Select pin as output
-    GPIO_Digital_Output( &GPIOC_BASE, _GPIO_PINMASK_2 ); // Set Reset pin to output
-    GPIO_Digital_Input( &GPIOD_BASE, _GPIO_PINMASK_10);  // Set Ready to input
-
-    // Initialize SPI
-    SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
-                       _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
-                       _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_DISABLE | _SPI_SSI_1,
-                       &_GPIO_MODULE_SPI3_PC10_11_12);
-
-    MATRIXRGB_RST = 0;        //Reset slave ( toggle )
-    Delay_ms(20);
-    MATRIXRGB_RST = 1;
-    Delay_ms(200);
-
-    matrixrgb_init( width, height, panel_size );
-    Delay_ms(200);
-
-}
 ```
 
+The full application code, and ready to use projects can be found on our 
+[LibStock](https://libstock.mikroe.com/projects/view/1840/matrix-rgb-click) page.
 
+Other mikroE Libraries used in the example:
+
+- SPI
+
+**Additional notes and informations**
+
+Depending on the development board you are using, you may need 
+[USB UART click](http://shop.mikroe.com/usb-uart-click), 
+[USB UART 2 Click](http://shop.mikroe.com/usb-uart-2-click) or 
+[RS232 Click](http://shop.mikroe.com/rs232-click) to connect to your PC, for 
+development systems with no UART to USB interface available on the board. The 
+terminal available in all Mikroelektronika 
+[compilers](http://shop.mikroe.com/compilers), or any other terminal application 
+of your choice, can be used to read the message.
+
+---
+### Architectures Supported
+
+#### mikroC
+
+| STM | KIN | CEC | MSP | TIVA | PIC | PIC32 | DSPIC | AVR | FT90x |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| x | x | x | x | x | x | x | x | x | x |
+
+#### mikroBasic
+
+| STM | KIN | CEC | MSP | TIVA | PIC | PIC32 | DSPIC | AVR | FT90x |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| x | x | x | x | x | x | x | x | x | x |
+
+#### mikroPascal
+
+| STM | KIN | CEC | MSP | TIVA | PIC | PIC32 | DSPIC | AVR | FT90x |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| x | x | x | x | x | x | x | x | x | x |
+
+---
+---

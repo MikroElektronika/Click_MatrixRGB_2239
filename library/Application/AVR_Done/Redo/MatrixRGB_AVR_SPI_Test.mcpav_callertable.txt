@@ -1,9 +1,0 @@
-main
-	system_setup
-		SPI1_Init_Advanced
-		matrixrgb_hal_init
-			matrixrgb_hal_cs_high
-		matrixrgb_hal_write
-			matrixrgb_hal_cs_low
-			matrixrgb_hal_cs_high
-			SPI1_Write

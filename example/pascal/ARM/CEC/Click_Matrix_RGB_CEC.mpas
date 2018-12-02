@@ -1,0 +1,100 @@
+{*
+Example for Matrix_RGB Click
+
+    Date          : Jul 2018.
+    Author        : MikroE Team
+
+Test configuration CEC :
+    
+    MCU              : CEC1702
+    Dev. Board       : Clicker 2 for CEC1702
+    ARM Compiler ver : v6.0.0.0
+
+---
+
+Description :
+
+The application is composed of three sections :
+
+- System Initialization : Initializes GPIO pins and SPI bus used for
+         communcation with the click board
+- Application Initialization : Initializes driver, reset device and initializes
+         firmware depend on pattern used alongside with fonts
+- Application Task (code snippet) : Test of panel brightnes, draws red cross on
+         the panel using pixel write function, writes text on panel using
+         write text function and finaly displays image on the panel.
+
+Notes :
+
+Use mikroE GLCD Font Creator to create font definition table.
+
+*}
+program Click_Matrix_RGB_CEC;
+
+uses Click_Matrix_RGB_types, Click_Matrix_RGB_config, images;
+
+procedure systemInit(); 
+begin
+
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_INT_PIN, _GPIO_INPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_CS_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_RST_PIN, _GPIO_OUTPUT); 
+    mikrobus_spiInit(_MIKROBUS1, @_MATRIXRGB_SPI_CFG[0]); 
+    Delay_ms(100); 
+
+end;
+
+procedure applicationInit(); 
+begin
+
+    matrixrgb_spiDriverInit(T_MATRIXRGB_P(@_MIKROBUS1_GPIO), T_MATRIXRGB_P(@_MIKROBUS1_SPI)); 
+    matrixrgb_deviceReset(); 
+    matrixrgb_deviceInit(_MATRIXRGB_PATTERN_1_MAP_5MM); 
+    matrixrgb_setPower(1); 
+    Delay_ms(1000); 
+    matrixrgb_fillScreen(0xFFFF); 
+    Delay_ms(1000); 
+
+end;
+
+procedure applicationTask(); 
+var
+    test : uint16_t;
+begin
+
+    for test := 5 to 50-1 do 
+    begin
+        matrixrgb_setBrightness(test); 
+        Delay_ms(50); 
+    end;
+    for test := 50 downto 5+1 do 
+    begin
+        matrixrgb_setBrightness(test); 
+        Delay_ms(50); 
+    end;
+    matrixrgb_fillScreen(0x0000); 
+    for test := 0 to 32-1 do 
+    begin
+        matrixrgb_writePixel(test, test, 0xF100); 
+        Delay_ms(100); 
+    end;
+    for test := 32 downto 0+1 do 
+    begin
+        matrixrgb_writePixel((31 - test), test, 0xF100); 
+        Delay_ms(100); 
+    end;
+    matrixrgb_drawImage(@mikroe_logo_32x32_bmp[0]); 
+    Delay_ms(1000); 
+
+end;
+
+begin
+
+    systemInit(); 
+    applicationInit(); 
+    while (1) do 
+    begin 
+        applicationTask(); 
+    end;
+
+end.
