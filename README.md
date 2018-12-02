@@ -6,7 +6,7 @@
 
 - **CIC Prefix**  : MATRIXRGB
 - **Author**      : Milos Vidojevic
-- **Verison**     : 2.0.0
+- **Verison**     : 2.1.0
 - **Date**        : Jul 2018.
 
 ---
